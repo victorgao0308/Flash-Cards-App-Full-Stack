@@ -7,7 +7,6 @@ const pool = new Pool({
   password: "password",
   port: 5432,
 });
-
 const getUsers = (request, response) => {
   pool.query(
     "SELECT * FROM accounts ORDER BY user_id ASC",
