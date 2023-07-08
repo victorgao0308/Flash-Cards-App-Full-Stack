@@ -4,7 +4,7 @@ Nav,
 NavLink,
 NavMenu,
 NavBtn,
-NavBtnLink,
+SignInBtn,
 } from './NavbarElements';
 
 const Navbar = () => {
@@ -12,8 +12,8 @@ return (
 	<>
 	<Nav>
 		<NavMenu>
-		<NavLink to='/Home'>
-			Home
+		<NavLink to='/Menu'>
+			Menu
 		</NavLink>
 		<NavLink to='/Sets'>
 			Sets
@@ -21,12 +21,10 @@ return (
 		<NavLink to='/Study'>
 			Study
 		</NavLink>
-		{/* Second Nav */}
-		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
 		</NavMenu>
 
 		<NavBtn>
-          <NavBtnLink to='/signin'>Sign In</NavBtnLink>
+          <SignInBtn to='/signin'>Sign In</SignInBtn>
         </NavBtn>
 
 	</Nav>

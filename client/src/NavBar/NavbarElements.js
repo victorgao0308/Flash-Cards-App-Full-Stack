@@ -46,9 +46,9 @@ margin-right: 24px;
 width: 100vw; */
 `;
 
-export const NavBtnLink = styled(Link)`
+export const SignInBtn = styled(Link)`
 border-radius: 4px;
-background: #808080;
+background: #07f78f	;
 padding: 10px 22px;
 color: #000000;
 outline: none;

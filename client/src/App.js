@@ -1,10 +1,11 @@
 // import React, { useState, useEffect } from "react";
-import Navbar from './NavBar';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home';
-import Sets from './Pages/Sets';
-import Study from './Pages/Study';
-
+import Navbar from "./NavBar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home"
+import Menu from "./Pages/Menu";
+import Sets from "./Pages/Sets";
+import Study from "./Pages/Study";
+import SignIn from "./Pages/SignIn";
 
 function App() {
   // const [message, setMessage] = useState("");
@@ -15,22 +16,19 @@ function App() {
   //   </div>
   // );
 
-  window.addEventListener('load', logUsers);
-  return (<Router>
-    <Navbar />
-    <Routes>
-      <Route path='/home'  element={<Home/>} />
-      <Route path='/sets' element={<Sets/>} />
-      <Route path='/study' element={<Study/>} />
-    </Routes>
-  </Router>)
-}
 
-async function logUsers() {
-  const response = await fetch("http://localhost:8000/users");
-  const users = await response.json();
-  console.log(users);
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/menu" element={<Menu/>} />
+        <Route path="/sets" element={<Sets/>} />
+        <Route path="/study" element={<Study/>} />
+        <Route path="/signIn" element={<SignIn/>} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
-

@@ -3,9 +3,7 @@ import '../CSS/Home.css'
   
 const Home = () => {
   return (
-    <h1 className = "homeText">Home</h1>
-
-
+    <h1>Home/Landing Page</h1>
   );
 };
   

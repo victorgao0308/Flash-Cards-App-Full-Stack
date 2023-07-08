@@ -19,12 +19,12 @@ const getUsers = (request, response) => {
   );
 };
 
-const getUserById = (request, response) => {
-  const id = parseInt(request.params.id);
+const getUserByUsername = (request, response) => {
+  username = request.params.username;
 
   pool.query(
-    "SELECT * FROM accounts WHERE user_id = $1",
-    [id],
+    "SELECT * FROM accounts WHERE username = $1",
+    [username],
     (error, results) => {
       if (error) {
         throw error;
@@ -79,7 +79,7 @@ const deleteUser = (request, response) => {
 
 module.exports = {
   getUsers,
-  getUserById,
+  getUserByUsername,
   createUser,
   updateUser,
   deleteUser,

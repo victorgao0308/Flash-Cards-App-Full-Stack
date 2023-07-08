@@ -1,0 +1,48 @@
+.SignInText {
+    margin: 0;
+    text-align: center;
+    padding-bottom: 2%;
+}
+
+.SignInContainer {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    border: 2px solid black;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.InputContainer {
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    top: 15%;
+    transform: translate(-50%);
+}
+
+.UsernameInput {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.PasswordInput {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.SignInBtn {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    top: 50%;
+}
+
+.SignUpLink {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: 75%;
+}
