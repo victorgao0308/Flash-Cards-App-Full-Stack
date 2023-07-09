@@ -5,6 +5,10 @@
     border: 2px solid black;
     border-radius: 5px;
   }
+
+  .set:hover {
+    cursor: pointer;
+  }
   
   .set h4 {
     position: relative;
