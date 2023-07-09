@@ -1,5 +1,5 @@
 // import React, { useState, useEffect } from "react";
-import Navbar from "./NavBar";
+import Navbar from "./Components/NavBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home"
 import Menu from "./Pages/Menu";
@@ -7,6 +7,9 @@ import Sets from "./Pages/Sets";
 import Study from "./Pages/Study";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
+
+
+
 
 
 
@@ -18,8 +21,6 @@ function App() {
   //     <h1>{message}</h1>
   //   </div>
   // );
-
-
 
   return (
     

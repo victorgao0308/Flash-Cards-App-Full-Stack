@@ -18,6 +18,6 @@ function isLoggedIn() {
     welcomeText = `Welcome back, ${user}`;
 	}
   else {
-    welcomeText = `Welcome! Create sign in or create an account to begin`
+    welcomeText = `Welcome! Sign in or create an account to begin`
   }
 }

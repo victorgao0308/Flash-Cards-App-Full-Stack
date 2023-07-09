@@ -1,0 +1,20 @@
+.set {
+    position: relative;
+    width: 10rem;
+    height: 5rem;
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+  
+  .set h4 {
+    position: relative;
+    text-align: center;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    max-width: 95%;
+    transform: translate(-50%, -50%);
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+  }

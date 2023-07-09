@@ -11,3 +11,7 @@ code {
     monospace;
 }
 
+#root {
+  z-index: -999;
+}
+

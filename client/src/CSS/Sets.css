@@ -1,3 +1,60 @@
 .sets-header {
-    margin: 0;
+  margin: 0;
+}
+
+.add-set-menu {
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  border: 3px solid black;
+  border-radius: 10px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -40%);
+  background: #63dff2;
+  z-index: 10;
+}
+
+.add-set-menu h3 {
+  margin: 0;
+  text-align: center;
+}
+
+.set-name-container {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%);
+  text-align: center;
+}
+
+.create-set-btn {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 20%;
+}
+.set-name-container h4 {
+  margin: 0;
+}
+
+.set-name-input {
+  outline: none;
+  max-width: 100%;
+}
+
+.sets-container {
+  position: relative;
+  width: 98%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  left: 3px;
+  top: 3px;
+}
+
+.hide {
+  display: none;
 }
