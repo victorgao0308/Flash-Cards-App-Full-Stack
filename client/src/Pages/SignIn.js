@@ -22,7 +22,7 @@ const SignIn = () => {
         <button className="SignInBtn" onClick={signIn}>
           Sign In
         </button>
-        <a className="SignUpLink" href="./Sets">
+        <a className="SignUpLink" href="./SignUp">
           Sign Up
         </a>
       </div>
@@ -37,10 +37,10 @@ let invalidUsernames = [];
 function signIn() {
   const username = document.querySelector(".UsernameInput").value;
   const password = document.querySelector(".PasswordInput").value;
-  if (username.length == 0 || username.indexOf(" ") != -1) {
+  if (username.length === 0 || username.indexOf(" ") !== -1) {
     console.log("enter a valid username");
   } else {
-    if (invalidUsernames.indexOf(username) == -1) checkSignIn(username, password);
+    if (invalidUsernames.indexOf(username) === -1) checkSignIn(username, password);
     else console.log("please enter a valid username");
   }
 
@@ -52,7 +52,7 @@ async function checkSignIn(username, password) {
   const user = await response.json();
 
   // no match found in database
-  if (user.length == 0) {
+  if (user.length === 0) {
     console.log("please enter a valid username");
     invalidUsernames.push(username);
   }

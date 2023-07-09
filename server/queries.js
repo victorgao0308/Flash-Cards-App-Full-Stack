@@ -11,9 +11,6 @@ const getUsers = (request, response) => {
   pool.query(
     "SELECT * FROM accounts ORDER BY user_id ASC",
     (error, results) => {
-      if (error) {
-        throw error;
-      }
       response.status(200).json(results.rows);
     }
   );
@@ -35,17 +32,19 @@ const getUserByUsername = (request, response) => {
 };
 
 const createUser = (request, response) => {
-  const { id, username, password, email } = request.body;
-  console.log(password);
-
+  const { username, password, email } = request.body;
   pool.query(
-    "INSERT INTO accounts (user_id, username, password, email) VALUES ($1, $2, $3, $4) RETURNING *",
-    [id, username, password, email],
+    "INSERT INTO accounts (username, password, email) VALUES ($1, $2, $3) RETURNING *",
+    [username, password, email],
     (error, results) => {
       if (error) {
+        response.status(200).send(`${error}`);
         throw error;
+      } else {
+        response
+          .status(200)
+          .send(`User added with ID: ${results.rows[0].user_id}`);
       }
-      response.status(200).send(`User added with ID: ${results.rows[0].id}`);
     }
   );
 };

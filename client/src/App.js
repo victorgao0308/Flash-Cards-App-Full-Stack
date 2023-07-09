@@ -6,6 +6,7 @@ import Menu from "./Pages/Menu";
 import Sets from "./Pages/Sets";
 import Study from "./Pages/Study";
 import SignIn from "./Pages/SignIn";
+import SignUp from "./Pages/SignUp";
 
 function App() {
   // const [message, setMessage] = useState("");
@@ -19,13 +20,14 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
+      <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/menu" element={<Menu/>} />
         <Route path="/sets" element={<Sets/>} />
         <Route path="/study" element={<Study/>} />
         <Route path="/signIn" element={<SignIn/>} />
+        <Route path="/signUp" element={<SignUp/>} />
       </Routes>
     </Router>
   );
