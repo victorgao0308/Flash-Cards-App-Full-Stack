@@ -7,6 +7,10 @@ NavBtn,
 SignInBtn,
 } from './NavbarElements';
 
+let signInVal = "Sign In";
+let signInTo = "/signin";
+isLoggedIn();
+
 const Navbar = () => {
 return (
 	<>
@@ -24,12 +28,19 @@ return (
 		</NavMenu>
 
 		<NavBtn>
-          <SignInBtn to='/signin'>Sign In</SignInBtn>
+          <SignInBtn to= {signInTo}>{signInVal}</SignInBtn>
         </NavBtn>
 
 	</Nav>
 	</>
 );
 };
-
 export default Navbar;
+
+function isLoggedIn() {
+	let user = JSON.parse(localStorage.getItem("signed in as"));
+	if (user) {
+		signInVal = `Logged in as ${user}`;
+		signInTo = '/menu'
+	}
+}

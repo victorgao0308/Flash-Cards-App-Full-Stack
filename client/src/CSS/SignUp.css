@@ -24,10 +24,15 @@
     margin: 0;
 }
 
-.sign-up-email, .sign-up-username, .sign-up-password {
+.input-container {
     position: relative;
-    left: 50%;
-    transform: translate(-50%);
+    width: 100%;
+    height: 20%;
+    text-align: center;
+}
+
+.sign-up-email, .sign-up-username, .sign-up-password {
+    max-width: 100%;
 }
 
 .sign-up-btn {
@@ -50,6 +55,7 @@
     text-align: center;
     color: red;
 }
+
 
 .hide {
     display: none;

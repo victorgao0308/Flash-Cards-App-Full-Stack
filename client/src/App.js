@@ -8,6 +8,8 @@ import Study from "./Pages/Study";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 
+
+
 function App() {
   // const [message, setMessage] = useState("");
   // useEffect(() => logUsers, []);
@@ -18,10 +20,12 @@ function App() {
   // );
 
 
+
   return (
+    
     <Router>
       <Navbar/>
-      <Routes>
+      <Routes forceRefresh = {true}>
         <Route path="/" element={<Home/>} />
         <Route path="/menu" element={<Menu/>} />
         <Route path="/sets" element={<Sets/>} />

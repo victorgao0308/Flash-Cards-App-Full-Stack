@@ -6,17 +6,24 @@ const SignIn = () => {
     <>
       <h1 className="sign-in-text">Sign In</h1>
       <div className="sign-in-container">
-        <div className="input-container">
-          <input
-            type="text"
-            className="username-input"
-            placeholder="Username"
-          ></input>
-          <input
-            type="password"
-            className="password-input"
-            placeholder="Password"
-          ></input>
+        <div className="sign-in-input-container">
+          <div className="input-container">
+            <h4>Username</h4>
+            <input
+              type="text"
+              className="username-input"
+              placeholder="Username"
+            ></input>
+          </div>
+
+          <div className="input-container">
+            <h4>Password</h4>
+            <input
+              type="password"
+              className="password-input"
+              placeholder="Password"
+            ></input>
+          </div>
         </div>
 
         <button className="sign-in-btn" onClick={signIn}>
@@ -40,10 +47,10 @@ function signIn() {
   if (username.length === 0 || username.indexOf(" ") !== -1) {
     console.log("enter a valid username");
   } else {
-    if (invalidUsernames.indexOf(username) === -1) checkSignIn(username, password);
+    if (invalidUsernames.indexOf(username) === -1)
+      checkSignIn(username, password);
     else console.log("please enter a valid username");
   }
-
 }
 
 // check credetials with database
@@ -60,11 +67,10 @@ async function checkSignIn(username, password) {
   // check if password matches
   else if (password === user[0].password) {
     // successful sign in
-    localStorage.setItem("signed in as", JSON.stringify(username))
+    localStorage.setItem("signed in as", JSON.stringify(username));
     window.location.href = "./Menu";
-  }
-  else {
+  } else {
     // incorrect password
-    console.log("incorrect password")
+    console.log("incorrect password");
   }
 }

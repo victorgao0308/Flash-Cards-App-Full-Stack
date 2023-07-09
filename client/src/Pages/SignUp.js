@@ -8,24 +8,32 @@ const SignUp = () => {
       <h1 className="sign-up-text">Sign Up</h1>
       <div className="sign-up-container">
         <div className="sign-up-input-container">
-          <h4>Email</h4>
-          <input
-            type="text"
-            className="sign-up-email"
-            placeholder="Email"
-          ></input>
-          <h4>Username</h4>
-          <input
-            type="text"
-            className="sign-up-username"
-            placeholder="Username"
-          ></input>
-          <h4>Password</h4>
-          <input
-            type="password"
-            className="sign-up-password"
-            placeholder="Password"
-          ></input>
+          <div className="input-container">
+            <h4>Email</h4>
+            <input
+              type="text"
+              className="sign-up-email"
+              placeholder="Email"
+            ></input>
+          </div>
+
+          <div className="input-container">
+            <h4>Username</h4>
+            <input
+              type="text"
+              className="sign-up-username"
+              placeholder="Username"
+            ></input>
+          </div>
+
+          <div className="input-container">
+            <h4>Password</h4>
+            <input
+              type="password"
+              className="sign-up-password"
+              placeholder="Password"
+            ></input>
+          </div>
         </div>
         <button className="sign-up-btn" onClick={signUp}>
           Sign Up
