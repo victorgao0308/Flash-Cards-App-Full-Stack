@@ -1,10 +1,10 @@
-.SignInText {
+.sign-in-text {
     margin: 0;
     text-align: center;
     padding-bottom: 2%;
 }
 
-.SignInContainer {
+.sign-in-container {
     position: absolute;
     width: 50%;
     height: 50%;
@@ -13,7 +13,7 @@
     transform: translate(-50%);
 }
 
-.InputContainer {
+.input-container {
     position: absolute;
     width: 50%;
     left: 50%;
@@ -21,26 +21,26 @@
     transform: translate(-50%);
 }
 
-.UsernameInput {
+.username-input {
     position: relative;
     left: 50%;
     transform: translate(-50%);
 }
 
-.PasswordInput {
+.password-input {
     position: relative;
     left: 50%;
     transform: translate(-50%);
 }
 
-.SignInBtn {
+.sign-in-btn {
     position: relative;
     left: 50%;
     transform: translate(-50%);
     top: 50%;
 }
 
-.SignUpLink {
+.sign-up-link {
     position: absolute;
     left: 50%;
     transform: translate(-50%);

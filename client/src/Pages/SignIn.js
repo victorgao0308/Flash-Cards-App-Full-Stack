@@ -4,25 +4,25 @@ import "../CSS/SignIn.css";
 const SignIn = () => {
   return (
     <>
-      <h1 className="SignInText">Sign In</h1>
-      <div className="SignInContainer">
-        <div className="InputContainer">
+      <h1 className="sign-in-text">Sign In</h1>
+      <div className="sign-in-container">
+        <div className="input-container">
           <input
             type="text"
-            className="UsernameInput"
+            className="username-input"
             placeholder="Username"
           ></input>
           <input
             type="password"
-            className="PasswordInput"
+            className="password-input"
             placeholder="Password"
           ></input>
         </div>
 
-        <button className="SignInBtn" onClick={signIn}>
+        <button className="sign-in-btn" onClick={signIn}>
           Sign In
         </button>
-        <a className="SignUpLink" href="./SignUp">
+        <a className="sign-up-link" href="./SignUp">
           Sign Up
         </a>
       </div>
@@ -35,8 +35,8 @@ export default SignIn;
 let invalidUsernames = [];
 
 function signIn() {
-  const username = document.querySelector(".UsernameInput").value;
-  const password = document.querySelector(".PasswordInput").value;
+  const username = document.querySelector(".username-input").value;
+  const password = document.querySelector(".password-input").value;
   if (username.length === 0 || username.indexOf(" ") !== -1) {
     console.log("enter a valid username");
   } else {
@@ -58,7 +58,7 @@ async function checkSignIn(username, password) {
   }
 
   // check if password matches
-  if (password === user[0].password) {
+  else if (password === user[0].password) {
     // successful sign in
     localStorage.setItem("signed in as", JSON.stringify(username))
     window.location.href = "./Menu";
