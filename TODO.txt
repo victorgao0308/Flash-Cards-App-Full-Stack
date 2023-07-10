@@ -1,1 +1,3 @@
 TODO:
+
+1. improve UI of sign in page (match that of sign up page)
