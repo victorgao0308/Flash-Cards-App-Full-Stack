@@ -96,6 +96,9 @@ async function checkSignIn(username, password) {
   else if (password === user[0].password) {
     // successful sign in
     localStorage.setItem("signed in as", JSON.stringify(username));
+
+    // load sets from database on sign in
+    localStorage.setItem("sets loaded from db", JSON.stringify("false"));
     window.location.href = "./Menu";
   } else {
     // incorrect password

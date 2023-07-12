@@ -20,16 +20,17 @@ process.on("unhandledRejection", (reason, promise) => {
 app.use(cors());
 app.use(express.json());
 
-app.get("/message", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
-
 app.get("/users", db.getUsers);
 app.get("/users/:username", db.getUserByUsername);
 
 app.post("/users", db.createUser);
 app.put("/users/:id", db.updateUser);
 app.delete("/users/:id", db.deleteUser);
+
+
+app.post("/sets", db.createSet);
+app.get("/sets", db.getSets);
+app.get("/sets/:owner", db.getSetsByOwner);
 
 
 app.listen(8000, () => {

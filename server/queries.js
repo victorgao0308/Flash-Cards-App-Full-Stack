@@ -76,10 +76,45 @@ const deleteUser = (request, response) => {
   });
 };
 
+const getSets = (request, response) => {
+  pool.query("SELECT * FROM sets ORDER BY set_id ASC", (error, results) => {
+    response.status(200).json(results.rows);
+  });
+};
+
+const getSetsByOwner = (request, response) => {
+  const owner = request.params.owner;
+  pool.query("SELECT * FROM sets WHERE owner = $1", [owner], (error, results) => {
+    response.status(200).json(results.rows);
+  });
+}
+
+const createSet = (request, response) => {
+  const { setName, owner } = request.body;
+
+  pool.query(
+    "INSERT INTO sets (set_name, owner) VALUES ($1, $2) RETURNING *",
+    [setName, owner],
+    (error, results) => {
+      if (error) {
+        response.status(200).send(`${error}`);
+        throw error;
+      } else {
+        response
+          .status(200)
+          .send(`Set added with ID: ${results.rows[0].set_id}`);
+      }
+    }
+  );
+};
+
 module.exports = {
   getUsers,
   getUserByUsername,
   createUser,
   updateUser,
   deleteUser,
+  getSets,
+  getSetsByOwner,
+  createSet,
 };
