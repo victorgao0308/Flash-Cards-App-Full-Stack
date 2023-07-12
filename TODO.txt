@@ -1,3 +1,4 @@
 TODO:
 
-1. improve UI of sign in page (match that of sign up page)
+1. implement sets table in database
+2. (maybe) fix UI for smaller screens?

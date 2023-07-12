@@ -37,7 +37,6 @@ const Sets = () => {
     });
 
     keys = keys.map((key) => {
-      console.log(key.substring(5));
       return parseInt(key.substring(5));
     });
 
