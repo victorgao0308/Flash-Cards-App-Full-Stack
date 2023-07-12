@@ -12,9 +12,9 @@ class Set {
 }
 
 function sorter(a, b) {
-	if (a < b) return -1;
-	if (a > b) return 1;
-	return 0;
+  if (a < b) return -1;
+  if (a > b) return 1;
+  return 0;
 }
 
 localStorage.setItem("sets loaded", JSON.stringify("false"));
@@ -48,11 +48,11 @@ const Sets = () => {
       let set = JSON.parse(localStorage.getItem(setId));
 
       currentSets.push(
-        <SetElement key={currentSets.length} setName={set.name} />
+        <SetElement key={currentSets.length} setName={set.name} setId = {set.setId}/>
       );
     });
     localStorage.setItem("sets loaded", JSON.stringify("true"));
-	localStorage.setItem("num sets", JSON.stringify(keys.length));
+    localStorage.setItem("num sets", JSON.stringify(keys.length));
   }
 
   function addSet() {
@@ -60,18 +60,19 @@ const Sets = () => {
     const addSetMenu = document.querySelector(".add-set-menu");
     let user = getOwner();
     let set = new Set(setName.value, user);
-    addSetMenu.classList.toggle("hide");
-    addNewSet(
-      currentSets.concat(
-        <SetElement key={currentSets.length} setName={setName.value} />
-      )
-    );
-
-    setName.value = "";
 
     // add set to database if user is signed in, and add set to local storage
     if (user) addSetToDatabase(set);
     addSetToLocalStorage(set);
+
+    addSetMenu.classList.toggle("hide");
+    addNewSet(
+      currentSets.concat(
+        <SetElement key={currentSets.length} setName={setName.value} setId = {set.setId}/>
+      )
+    );
+
+    setName.value = "";
   }
 
   return (

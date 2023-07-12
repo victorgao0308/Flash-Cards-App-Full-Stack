@@ -17,7 +17,7 @@
     position: absolute;
     width: 50%;
     left: 50%;
-    top: 15%;
+    top: 5%;
     transform: translate(-50%);
 }
 .sign-up-input-container h4 {
@@ -39,7 +39,7 @@
     position: relative;
     left: 50%;
     transform: translate(-50%);
-    top: 60%;
+    top: 50%;
 }
 
 .sign-up-error-message-container {
@@ -55,7 +55,6 @@
     text-align: center;
     color: red;
 }
-
 
 .hide {
     display: none;

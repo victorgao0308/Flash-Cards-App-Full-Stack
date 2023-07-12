@@ -26,15 +26,34 @@
 }
 
 .sign-in-btn {
-    position: relative;
+    position: absolute;
     left: 50%;
     transform: translate(-50%);
-    top: 50%;
+    top: 70%;
 }
 
 .sign-up-link {
     position: absolute;
     left: 50%;
     transform: translate(-50%);
-    top: 75%;
+    top: 85%;
+}
+
+.username-input, .password-input {
+    max-width: 100%;
+    outline: none;
+}
+
+.sign-in-error-message-container {
+    position: absolute;
+    height: 20%;
+    width: 100%;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 30%;
+}
+
+.sign-in-error-message {
+    text-align: center;
+    color: red;
 }

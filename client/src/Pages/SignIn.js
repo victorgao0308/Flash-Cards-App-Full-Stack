@@ -29,6 +29,11 @@ const SignIn = () => {
         <button className="sign-in-btn" onClick={signIn}>
           Sign In
         </button>
+
+        <div className="sign-in-error-message-container">
+          <p className="sign-in-error-message hide">test</p>
+        </div>
+
         <a className="sign-up-link" href="./SignUp">
           Sign Up
         </a>
@@ -44,12 +49,30 @@ let invalidUsernames = [];
 function signIn() {
   const username = document.querySelector(".username-input").value;
   const password = document.querySelector(".password-input").value;
+  const errorMessage = document.querySelector(".sign-in-error-message");
+
   if (username.length === 0 || username.indexOf(" ") !== -1) {
-    console.log("enter a valid username");
+    errorMessage.innerHTML = `Please make sure you enter a valid username`;
+    errorMessage.classList.remove("hide");
+    setTimeout(() => {
+      errorMessage.classList.add("hide");
+    }, 2500);
+  } else if (password.length === 0 || password.indexOf(" ") !== -1) {
+    errorMessage.innerHTML = `Please make sure you enter a valid password`;
+    errorMessage.classList.remove("hide");
+    setTimeout(() => {
+      errorMessage.classList.add("hide");
+    }, 2500);
   } else {
     if (invalidUsernames.indexOf(username) === -1)
       checkSignIn(username, password);
-    else console.log("please enter a valid username");
+    else {
+      errorMessage.innerHTML = `That username does not exist`;
+      errorMessage.classList.remove("hide");
+      setTimeout(() => {
+        errorMessage.classList.add("hide");
+      }, 2500);
+    }
   }
 }
 
@@ -57,10 +80,15 @@ function signIn() {
 async function checkSignIn(username, password) {
   const response = await fetch(`http://localhost:8000/users/${username}`);
   const user = await response.json();
+  const errorMessage = document.querySelector(".sign-in-error-message");
 
   // no match found in database
   if (user.length === 0) {
-    console.log("please enter a valid username");
+    errorMessage.innerHTML = `That username does not exist`;
+    errorMessage.classList.remove("hide");
+    setTimeout(() => {
+      errorMessage.classList.add("hide");
+    }, 2500);
     invalidUsernames.push(username);
   }
 
@@ -71,6 +99,10 @@ async function checkSignIn(username, password) {
     window.location.href = "./Menu";
   } else {
     // incorrect password
-    console.log("incorrect password");
+    errorMessage.innerHTML = `Incorrect password`;
+    errorMessage.classList.remove("hide");
+    setTimeout(() => {
+      errorMessage.classList.add("hide");
+    }, 2500);
   }
 }

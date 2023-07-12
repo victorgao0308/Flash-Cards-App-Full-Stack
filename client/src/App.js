@@ -7,11 +7,7 @@ import Sets from "./Pages/Sets";
 import Study from "./Pages/Study";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
-
-
-
-
-
+import ViewSet from "./Pages/ViewSet";
 
 function App() {
   // const [message, setMessage] = useState("");
@@ -23,7 +19,6 @@ function App() {
   // );
 
   return (
-    
     <Router>
       <Navbar/>
       <Routes forceRefresh = {true}>
@@ -33,6 +28,7 @@ function App() {
         <Route path="/study" element={<Study/>} />
         <Route path="/signIn" element={<SignIn/>} />
         <Route path="/signUp" element={<SignUp/>} />
+        <Route path="/viewset" element={<ViewSet/>} />
       </Routes>
     </Router>
   );

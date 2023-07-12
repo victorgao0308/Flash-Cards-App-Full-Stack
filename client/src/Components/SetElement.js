@@ -2,9 +2,9 @@ import React from 'react';
 import "../CSS/SetElement.css";
 
 const SetElement = (prop) => {
-
     function click() {
-        console.log(`${prop.setName}`)
+        localStorage.setItem("viewing set", JSON.stringify(prop.setId));
+        window.location.href = `./ViewSet`
     }
     return(
         <div className='set' onClick={click}>
