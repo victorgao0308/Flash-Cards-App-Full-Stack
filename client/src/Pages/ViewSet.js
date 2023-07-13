@@ -9,7 +9,7 @@ const ViewSet = () => {
   getSet();
     return (
       <>
-      <h1 className="view-set-header"> {set? `Viewing set ${set.name}` : "error"}</h1>
+      <h1 className="view-set-header"> {set? `Viewing set ${set.set_name}` : "error"}</h1>
       <button>Add Card</button>
       </>
     );

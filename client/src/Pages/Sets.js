@@ -5,10 +5,12 @@ import axios from "axios";
 
 class Set {
   constructor(name, owner) {
-    this.name = name;
+    this.set_id = 0; // temp, replace with actual id after adding to database/localstorage
+    this.set_name = name;
     this.cards = [];
+    this.total_time_studied = null;
+    this.total_accuracy = null;
     this.owner = owner;
-    this.setId = -1; // temp, replace with actual id after adding to database/localstorage
   }
 }
 
@@ -21,6 +23,9 @@ function sorter(a, b) {
 localStorage.setItem("sets loaded", JSON.stringify("false"));
 
 const Sets = () => {
+  // get the user that is signed in
+  let user = getOwner();
+
   const [currentSets, addNewSet] = useState([]);
 
   let loaded =
@@ -33,8 +38,6 @@ const Sets = () => {
       ? true
       : false;
 
-  // get the user that is signed in
-  let user = getOwner();
   if (!loadedDB) loadSetsFromDatabase(user);
 
   // load sets from local storage
@@ -53,16 +56,18 @@ const Sets = () => {
     keys.sort(sorter);
 
     keys.forEach((key) => {
-      let setId = `set: ${key}`;
-      let set = JSON.parse(localStorage.getItem(setId));
+      let set_id = `set: ${key}`;
+      let set = JSON.parse(localStorage.getItem(set_id));
 
-      currentSets.push(
-        <SetElement
-          key={currentSets.length}
-          setName={set.name}
-          setId={set.setId}
-        />
-      );
+      if (set.owner == user) {
+        currentSets.push(
+          <SetElement
+            key={currentSets.length}
+            setName={set.set_name}
+            set_id={set.set_id}
+          />
+        );
+      }
     });
     localStorage.setItem("sets loaded", JSON.stringify("true"));
     localStorage.setItem("num sets", JSON.stringify(keys.length));
@@ -83,11 +88,13 @@ const Sets = () => {
         ? JSON.parse(localStorage.getItem("num sets"))
         : 0;
       numSets++;
-      if (set.setId === -1) {
-        set.setId = numSets;
+      console.log(set.set_id);
+
+      if (set.set_id === 0) {
+        set.set_id = numSets;
       }
       localStorage.setItem("num sets", JSON.stringify(numSets));
-      localStorage.setItem(`set: ${set.setId}`, JSON.stringify(set));
+      localStorage.setItem(`set: ${set.set_id}`, JSON.stringify(set));
 
       addSetMenu.classList.toggle("hide");
       addNewSet(
@@ -95,7 +102,7 @@ const Sets = () => {
           <SetElement
             key={currentSets.length}
             setName={setName.value}
-            setId={set.setId}
+            set_id={set.set_id}
           />
         )
       );
@@ -112,10 +119,26 @@ const Sets = () => {
         })
         .then((res) => {
           let id = parseInt(res.data.substring(19));
-          set.setId = id;
+          set.set_id = id;
         });
       addSetToLocalStorage(set);
     }
+  }
+
+  // load sets from database
+  async function loadSetsFromDatabase(owner) {
+    await axios
+      .get(`http://localhost:8000/sets/${owner}`)
+      .then((res) => {
+        res.data.forEach((set) => {
+          localStorage.setItem(`set: ${set.set_id}`, JSON.stringify(set));
+        });
+        localStorage.setItem("sets loaded from db", JSON.stringify("true"));
+      })
+      .catch((error) => {
+        console.log(error);
+        localStorage.setItem("sets loaded from db", JSON.stringify("false"));
+      });
   }
 
   return (
@@ -156,18 +179,4 @@ function toggleAddSetMenu() {
 
 function getOwner() {
   return JSON.parse(localStorage.getItem("signed in as"));
-}
-
-// load sets from database
-async function loadSetsFromDatabase(owner) {
-  await axios
-    .get(`http://localhost:8000/sets/${owner}`)
-    .then((res) => {
-      console.log(res.data);
-      localStorage.setItem("sets loaded from db", JSON.stringify("true"));
-    })
-    .catch((error) => {
-      console.log(error);
-      localStorage.setItem("sets loaded from db", JSON.stringify("false"));
-    });
 }

@@ -3,7 +3,7 @@ import "../CSS/SetElement.css";
 
 const SetElement = (prop) => {
     function click() {
-        localStorage.setItem("viewing set", JSON.stringify(prop.setId));
+        localStorage.setItem("viewing set", JSON.stringify(prop.set_id));
         window.location.href = `./ViewSet`
     }
     return(
