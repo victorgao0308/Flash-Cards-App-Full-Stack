@@ -1,3 +1,50 @@
 .view-set-header {
     margin: 0;
 }
+
+.set-btns-container {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.add-card-menu {
+    position: absolute;
+    width: 40%;
+    height: 40%;
+    border: 3px solid black;
+    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -40%);
+    background: #63dff2;
+    z-index: 10;
+  }
+
+  .add-card-menu h4 {
+    text-align: center;
+  }
+
+  .card-front-input, .card-back-input {
+    position: relative;
+    width: 95%;
+    left: 2.5%;
+    height: 50%;
+    outline: none;
+    background: none;
+    border: none;
+    resize: none;
+  }
+
+  .add-card-btn-container {
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+    display: flex;
+    gap: 5px;
+  }
+
+  .hide {
+    display: none;
+  }

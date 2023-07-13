@@ -59,7 +59,7 @@ const Sets = () => {
       let set_id = `set: ${key}`;
       let set = JSON.parse(localStorage.getItem(set_id));
 
-      if (set.owner == user) {
+      if (set.owner === user) {
         currentSets.push(
           <SetElement
             key={currentSets.length}
