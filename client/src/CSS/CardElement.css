@@ -1,0 +1,26 @@
+.card-front, .card-back {
+    position: relative;
+    width: 10rem;
+    height: 5rem;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+
+.card-front-text, .card-back-text {
+    position: relative;
+    text-align: center;
+    margin: 0;
+    left: 50%;
+    top: 50%;
+    max-width: 95%;
+    transform: translate(-50%, -50%);
+    word-wrap: break-word;
+    white-space: normal;
+    overflow: hidden;
+    user-select: none;
+}
+
+.hide {
+    display: none;
+}

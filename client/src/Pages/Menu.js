@@ -6,6 +6,8 @@ let signOutBtn;
 
 const Menu = () => {
   localStorage.setItem("sets loaded", JSON.stringify("false"));
+  localStorage.setItem("cards loaded", JSON.stringify("false"));
+
   isLoggedIn();
   return (
   <>

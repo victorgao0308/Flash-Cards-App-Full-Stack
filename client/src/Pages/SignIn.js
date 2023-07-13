@@ -2,6 +2,8 @@ import React from "react";
 import "../CSS/SignIn.css";
 
 const SignIn = () => {
+  localStorage.setItem("sets loaded", JSON.stringify("false"));
+  localStorage.setItem("cards loaded", JSON.stringify("false"));
   return (
     <>
       <h1 className="sign-in-text">Sign In</h1>

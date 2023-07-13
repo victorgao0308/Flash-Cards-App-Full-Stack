@@ -27,6 +27,8 @@ const Sets = () => {
   let user = getOwner();
 
   const [currentSets, addNewSet] = useState([]);
+  localStorage.setItem("cards loaded", JSON.stringify("false"));
+
 
   let loaded =
     JSON.parse(localStorage.getItem("sets loaded")) === "true" ? true : false;
@@ -90,8 +92,9 @@ const Sets = () => {
       numSets++;
       console.log(set.set_id);
 
+      // didn't get added to db
       if (set.set_id === 0) {
-        set.set_id = numSets;
+        set.set_id = numSets + 1000000000;
       }
       localStorage.setItem("num sets", JSON.stringify(numSets));
       localStorage.setItem(`set: ${set.set_id}`, JSON.stringify(set));
@@ -114,7 +117,7 @@ const Sets = () => {
     async function addSetToDatabase(set) {
       await axios
         .post(`http://localhost:8000/sets`, {
-          setName: `${set.name}`,
+          setName: `${set.set_name}`,
           owner: `${set.owner}`,
         })
         .then((res) => {

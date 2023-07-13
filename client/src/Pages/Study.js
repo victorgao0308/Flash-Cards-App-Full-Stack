@@ -2,6 +2,8 @@ import React from "react";
 
 const Study = () => {
   localStorage.setItem("sets loaded", JSON.stringify("false"));
+  localStorage.setItem("cards loaded", JSON.stringify("false"));
+
 
   return (
     <div
