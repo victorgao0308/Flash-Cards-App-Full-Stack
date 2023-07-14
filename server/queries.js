@@ -156,6 +156,17 @@ const addCardsToSet = (request, response) => {
   })
 }
 
+const getCardById = (request, response) => {
+  const cardId = request.params.id;
+  pool.query(
+    "SELECT * FROM cards WHERE card_id = $1",
+    [cardId],
+    (error, results) => {
+      response.status(200).json(results.rows);
+    }
+  );
+}
+
 
 module.exports = {
   getUsers,
@@ -169,5 +180,6 @@ module.exports = {
   createCard,
   getCards,
   getCardsFromSet,
-  addCardsToSet
+  addCardsToSet,
+  getCardById
 };

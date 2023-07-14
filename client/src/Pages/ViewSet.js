@@ -38,8 +38,9 @@ const ViewSet = () => {
 
   if (!loadedCards) loadCardsFromLocalStorage();
 
-  let loadedCardsFromDB =
-    localStorage.getItem("cards loaded from db") ? JSON.parse(localStorage.getItem("cards loaded from db")) : [];
+  let loadedCardsFromDB = localStorage.getItem("cards loaded from db")
+    ? JSON.parse(localStorage.getItem("cards loaded from db"))
+    : [];
 
   let cardsLoaded;
   if (loadedCardsFromDB.indexOf(setId) !== -1) cardsLoaded = true;
@@ -53,7 +54,23 @@ const ViewSet = () => {
     if (cardsLoaded == null) cardsLoaded = [setId];
     else cardsLoaded.push(setId);
 
+    let newCards = [];
+    cards.forEach((card) => {
+      getCardById(card);
+    });
+
+    async function getCardById(cardId) {
+      await axios.get(`http://localhost:8000/cards/${cardId}`).then((res) => {
+        newCards.push(res.data[0]);
+      });
+    }
+
+    set.cards = newCards;
+    console.log(newCards);
+
     localStorage.setItem("cards loaded from db", JSON.stringify(cardsLoaded));
+    // localStorage.setItem(`set: ${setId}`, JSON.stringify(set));
+    loadCardsFromLocalStorage();
   }
 
   function loadCardsFromLocalStorage() {
