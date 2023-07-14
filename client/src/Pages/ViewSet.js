@@ -29,14 +29,9 @@ class Card {
 localStorage.setItem("cards loaded", JSON.stringify("false"));
 
 const ViewSet = () => {
-  const [currentCards, addNewCard] = useState([]);
+  let [currentCards, addNewCard] = useState([]);
 
   getSet();
-
-  let loadedCards =
-    JSON.parse(localStorage.getItem("cards loaded")) === "true" ? true : false;
-
-  if (!loadedCards) loadCardsFromLocalStorage();
 
   let loadedCardsFromDB = localStorage.getItem("cards loaded from db")
     ? JSON.parse(localStorage.getItem("cards loaded from db"))
@@ -46,9 +41,18 @@ const ViewSet = () => {
   if (loadedCardsFromDB.indexOf(setId) !== -1) cardsLoaded = true;
   else cardsLoaded = false;
 
-  if (!cardsLoaded) loadCardsFromDB();
+  if (!cardsLoaded) {
+    localStorage.setItem("cards loaded", JSON.stringify("true"));
+    loadCardsFromDB();
+  }
+
+  let loadedCards =
+    JSON.parse(localStorage.getItem("cards loaded")) === "true" ? true : false;
+
+  if (!loadedCards) loadCardsFromLocalStorage();
 
   async function loadCardsFromDB() {
+    if (set == null) return;
     let cards = set.cards;
     if (cards == null) cards = [];
     let cardsLoaded = JSON.parse(localStorage.getItem("cards loaded from db"));
@@ -63,12 +67,12 @@ const ViewSet = () => {
     async function getCardById(cardId, index) {
       await axios.get(`http://localhost:8000/cards/${cardId}`).then((res) => {
         newCards.push(res.data[0]);
-        if (index === cards.length - 1) {
-          set.cards = newCards;
-          localStorage.setItem(`set: ${setId}`, JSON.stringify(set));
-          loadCardsFromLocalStorage();
-        }
       });
+      if (index === cards.length - 1) {
+        set.cards = newCards;
+        localStorage.setItem(`set: ${setId}`, JSON.stringify(set));
+        loadCardsFromLocalStorage();
+      }
     }
 
     localStorage.setItem("cards loaded from db", JSON.stringify(cardsLoaded));
@@ -81,15 +85,18 @@ const ViewSet = () => {
 
     let cards = set.cards;
     if (cards == null) return;
-    console.log(cards);
     cards.forEach((card) => {
-      currentCards.push(
-        <CardElement
-          key={currentCards.length}
-          card_id={card.card_id}
-          card_front={card.front}
-          card_back={card.back}
-        />
+      console.log(card);
+
+      addNewCard(
+        currentCards = currentCards.concat(
+          <CardElement
+            key={currentCards.length}
+            card_id={card.card_id}
+            card_front={card.front}
+            card_back={card.back}
+          />
+        )
       );
     });
   }
