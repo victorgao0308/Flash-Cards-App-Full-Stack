@@ -30,6 +30,6 @@ function isLoggedIn() {
 }
 
 function signOut() {
-  localStorage.removeItem("signed in as");
+  localStorage.clear();
   window.location.href = "./menu"
 }

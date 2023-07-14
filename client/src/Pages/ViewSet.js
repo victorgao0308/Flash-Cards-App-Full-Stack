@@ -29,9 +29,8 @@ class Card {
 localStorage.setItem("cards loaded", JSON.stringify("false"));
 
 const ViewSet = () => {
-  let [currentCards, addNewCard] = useState([]);
-
   getSet();
+  let [currentCards, addNewCard] = useState([]);
 
   let loadedCardsFromDB = localStorage.getItem("cards loaded from db")
     ? JSON.parse(localStorage.getItem("cards loaded from db"))
@@ -60,15 +59,17 @@ const ViewSet = () => {
     else cardsLoaded.push(setId);
 
     let newCards = [];
-    cards.forEach((card, index) => {
-      getCardById(card, index);
+    cards.forEach((card) => {
+      getCardById(card);
     });
 
-    async function getCardById(cardId, index) {
+
+    async function getCardById(cardId) {
       await axios.get(`http://localhost:8000/cards/${cardId}`).then((res) => {
         newCards.push(res.data[0]);
       });
-      if (index === cards.length - 1) {
+
+      if (newCards.length === cards.length) {
         set.cards = newCards;
         localStorage.setItem(`set: ${setId}`, JSON.stringify(set));
         loadCardsFromLocalStorage();
@@ -85,9 +86,11 @@ const ViewSet = () => {
 
     let cards = set.cards;
     if (cards == null) return;
-    cards.forEach((card) => {
-      console.log(card);
 
+    cards = cards.sort((a,b) => sortCardsById(a,b));
+    console.log(cards);
+
+    cards.forEach((card) => {
       addNewCard(
         currentCards = currentCards.concat(
           <CardElement
@@ -99,6 +102,15 @@ const ViewSet = () => {
         )
       );
     });
+  }
+
+  function sortCardsById (a,b) {
+    const a_id = parseInt(a.card_id);
+    const b_id = parseInt(b.card_id);
+
+    if (a_id > b_id) return 1;
+    if (b_id > a_id) return -1;
+    return 0;
   }
 
   function addCard() {

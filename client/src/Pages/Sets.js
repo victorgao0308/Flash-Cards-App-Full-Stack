@@ -94,7 +94,6 @@ const Sets = () => {
         ? JSON.parse(localStorage.getItem("num sets"))
         : 0;
       numSets++;
-      console.log(set.set_id);
 
       // didn't get added to db
       if (set.set_id === 0) {
