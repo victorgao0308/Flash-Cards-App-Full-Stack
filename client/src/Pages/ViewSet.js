@@ -48,29 +48,30 @@ const ViewSet = () => {
 
   if (!cardsLoaded) loadCardsFromDB();
 
-  function loadCardsFromDB() {
+  async function loadCardsFromDB() {
     let cards = set.cards;
+    if (cards == null) cards = [];
     let cardsLoaded = JSON.parse(localStorage.getItem("cards loaded from db"));
     if (cardsLoaded == null) cardsLoaded = [setId];
     else cardsLoaded.push(setId);
 
     let newCards = [];
-    cards.forEach((card) => {
-      getCardById(card);
+    cards.forEach((card, index) => {
+      getCardById(card, index);
     });
 
-    async function getCardById(cardId) {
+    async function getCardById(cardId, index) {
       await axios.get(`http://localhost:8000/cards/${cardId}`).then((res) => {
         newCards.push(res.data[0]);
+        if (index === cards.length - 1) {
+          set.cards = newCards;
+          localStorage.setItem(`set: ${setId}`, JSON.stringify(set));
+          loadCardsFromLocalStorage();
+        }
       });
     }
 
-    set.cards = newCards;
-    console.log(newCards);
-
     localStorage.setItem("cards loaded from db", JSON.stringify(cardsLoaded));
-    // localStorage.setItem(`set: ${setId}`, JSON.stringify(set));
-    loadCardsFromLocalStorage();
   }
 
   function loadCardsFromLocalStorage() {
@@ -80,6 +81,7 @@ const ViewSet = () => {
 
     let cards = set.cards;
     if (cards == null) return;
+    console.log(cards);
     cards.forEach((card) => {
       currentCards.push(
         <CardElement

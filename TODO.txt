@@ -1,5 +1,7 @@
 TODO:
 
+
+FIX ISSUE OF LOADIND CARDS FROM DATABASE
 1. (maybe) fix UI for smaller screens?
 2. update user's sets owned column in database
 3. ability to edit/delete sets

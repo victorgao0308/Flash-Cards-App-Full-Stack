@@ -26,22 +26,23 @@ const Sets = () => {
   // get the user that is signed in
   let user = getOwner();
 
-  const [currentSets, addNewSet] = useState([]);
+  let [currentSets, addNewSet] = useState([]);
   localStorage.setItem("cards loaded", JSON.stringify("false"));
-
-
-
-  let loaded =
-    JSON.parse(localStorage.getItem("sets loaded")) === "true" ? true : false;
-
-  if (!loaded) loadSetsFromLocalStorage();
 
   let loadedDB =
     JSON.parse(localStorage.getItem("sets loaded from db")) === "true"
       ? true
       : false;
 
-  if (!loadedDB) loadSetsFromDatabase(user);
+  if (!loadedDB) {
+    localStorage.setItem("sets loaded", JSON.stringify("true"));
+    loadSetsFromDatabase(user);
+  }
+
+  let loaded =
+    JSON.parse(localStorage.getItem("sets loaded")) === "true" ? true : false;
+
+  if (!loaded) loadSetsFromLocalStorage();
 
   // load sets from local storage
   function loadSetsFromLocalStorage() {
@@ -61,17 +62,19 @@ const Sets = () => {
     keys.forEach((key) => {
       let set_id = `set: ${key}`;
       let set = JSON.parse(localStorage.getItem(set_id));
-
       if (set.owner === user) {
-        currentSets.push(
-          <SetElement
-            key={currentSets.length}
-            setName={set.set_name}
-            set_id={set.set_id}
-          />
+        addNewSet(
+          currentSets = currentSets.concat(
+            [<SetElement
+              key={currentSets.length}
+              setName={set.set_name}
+              set_id={set.set_id}
+            />]
+          )
         );
       }
     });
+
     localStorage.setItem("sets loaded", JSON.stringify("true"));
     localStorage.setItem("num sets", JSON.stringify(keys.length));
   }
@@ -143,7 +146,7 @@ const Sets = () => {
         console.log(error);
         localStorage.setItem("sets loaded from db", JSON.stringify("false"));
       });
-      loadSetsFromLocalStorage();
+    loadSetsFromLocalStorage();
   }
 
   return (
