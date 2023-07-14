@@ -4,6 +4,7 @@ import "../CSS/SignIn.css";
 const SignIn = () => {
   localStorage.setItem("sets loaded", JSON.stringify("false"));
   localStorage.setItem("cards loaded", JSON.stringify("false"));
+
   return (
     <>
       <h1 className="sign-in-text">Sign In</h1>
@@ -101,6 +102,7 @@ async function checkSignIn(username, password) {
 
     // load sets from database on sign in
     localStorage.setItem("sets loaded from db", JSON.stringify("false"));
+
     window.location.href = "./Menu";
   } else {
     // incorrect password

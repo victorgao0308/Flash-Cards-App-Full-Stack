@@ -5,6 +5,7 @@ import "../CSS/SignUp.css";
 const SignUp = () => {
   localStorage.setItem("sets loaded", JSON.stringify("false"));
   localStorage.setItem("cards loaded", JSON.stringify("false"));
+
   return (
     <>
       <h1 className="sign-up-text">Sign Up</h1>

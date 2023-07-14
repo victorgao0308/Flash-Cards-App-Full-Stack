@@ -20,18 +20,26 @@ process.on("unhandledRejection", (reason, promise) => {
 app.use(cors());
 app.use(express.json());
 
+
+// users
 app.get("/users", db.getUsers);
 app.get("/users/:username", db.getUserByUsername);
-
 app.post("/users", db.createUser);
 app.put("/users/:id", db.updateUser);
 app.delete("/users/:id", db.deleteUser);
 
 
+// sets
 app.post("/sets", db.createSet);
 app.get("/sets", db.getSets);
 app.get("/sets/:owner", db.getSetsByOwner);
 
+
+// cards
+app.get("/cards", db.getCards);
+app.post("/cards", db.createCard);
+app.get("/sets/cards/:id", db.getCardsFromSet);
+app.put("/sets/insertcards/:id", db.addCardsToSet)
 
 app.listen(8000, () => {
   console.log(`Server is running on port 8000.`);

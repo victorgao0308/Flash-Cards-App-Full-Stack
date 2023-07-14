@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CardElement from "../Components/CardElement";
 import "../CSS/ViewSet.css";
+import axios from "axios";
 
 let setId;
 let set;
@@ -12,11 +13,11 @@ class Card {
     this.back = back;
 
     this.MCQ_attempted = 0;
-    this.MCC_crrect = 0;
+    this.MCQ_correct = 0;
     this.MCQ_percentage = 0;
 
     this.FITB_attempted = 0;
-    this.FITB_xorrect = 0;
+    this.FITB_correct = 0;
     this.FITB_percentage = 0;
 
     this.total_attempted = 0;
@@ -36,6 +37,24 @@ const ViewSet = () => {
     JSON.parse(localStorage.getItem("cards loaded")) === "true" ? true : false;
 
   if (!loadedCards) loadCardsFromLocalStorage();
+
+  let loadedCardsFromDB =
+    localStorage.getItem("cards loaded from db") ? JSON.parse(localStorage.getItem("cards loaded from db")) : [];
+
+  let cardsLoaded;
+  if (loadedCardsFromDB.indexOf(setId) !== -1) cardsLoaded = true;
+  else cardsLoaded = false;
+
+  if (!cardsLoaded) loadCardsFromDB();
+
+  function loadCardsFromDB() {
+    let cards = set.cards;
+    let cardsLoaded = JSON.parse(localStorage.getItem("cards loaded from db"));
+    if (cardsLoaded == null) cardsLoaded = [setId];
+    else cardsLoaded.push(setId);
+
+    localStorage.setItem("cards loaded from db", JSON.stringify(cardsLoaded));
+  }
 
   function loadCardsFromLocalStorage() {
     localStorage.setItem("cards loaded", JSON.stringify("true"));
@@ -80,11 +99,40 @@ const ViewSet = () => {
     else addCardToLocalStorage(card);
   }
 
-  function addCardToDatabase(card) {
-    // add stuff to db here....
-    // including setting proper card id...
+  async function addCardToDatabase(card) {
+    await axios
+      .post(`http://localhost:8000/cards`, {
+        front: `${card.front}`,
+        back: `${card.back}`,
+      })
+      .then((res) => {
+        let id = parseInt(res.data.substring(20));
+        card.card_id = id;
+      });
+    getCardsFromSet(card);
     addCardToLocalStorage(card);
   }
+
+  async function getCardsFromSet(card) {
+    await axios.get(`http://localhost:8000/sets/cards/${setId}`).then((res) => {
+      let cards = res.data[0].cards;
+      // only store the card id's in the database
+      if (cards == null) cards = [];
+      cards.push(JSON.stringify(card.card_id));
+      addCardsToSet(cards);
+    });
+  }
+
+  async function addCardsToSet(cards) {
+    await axios
+      .put(`http://localhost:8000/sets/insertcards/${setId}`, {
+        cards: { cards },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }
+
   function addCardToLocalStorage(card) {
     let setId = JSON.parse(localStorage.getItem("viewing set"));
     if (setId == null) return;
@@ -95,8 +143,10 @@ const ViewSet = () => {
       ? JSON.parse(localStorage.getItem("num cards"))
       : 0;
     numCards++;
-    if (card.card_id == 0) {
-      card.card_id = numCards;
+
+    // if card wasn't added to db (user not logged in)
+    if (card.card_id === 0) {
+      card.card_id = numCards + 1000000000;
     }
     addNewCard(
       currentCards.concat(
@@ -145,9 +195,7 @@ const ViewSet = () => {
         </div>
       </div>
 
-      <div className="cards-container">
-        {currentCards}
-      </div>
+      <div className="cards-container">{currentCards}</div>
     </>
   );
 };

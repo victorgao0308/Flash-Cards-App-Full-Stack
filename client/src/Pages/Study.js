@@ -5,6 +5,7 @@ const Study = () => {
   localStorage.setItem("cards loaded", JSON.stringify("false"));
 
 
+
   return (
     <div
       style={{

@@ -30,6 +30,7 @@ const Sets = () => {
   localStorage.setItem("cards loaded", JSON.stringify("false"));
 
 
+
   let loaded =
     JSON.parse(localStorage.getItem("sets loaded")) === "true" ? true : false;
 
@@ -142,6 +143,7 @@ const Sets = () => {
         console.log(error);
         localStorage.setItem("sets loaded from db", JSON.stringify("false"));
       });
+      loadSetsFromLocalStorage();
   }
 
   return (

@@ -84,10 +84,14 @@ const getSets = (request, response) => {
 
 const getSetsByOwner = (request, response) => {
   const owner = request.params.owner;
-  pool.query("SELECT * FROM sets WHERE owner = $1", [owner], (error, results) => {
-    response.status(200).json(results.rows);
-  });
-}
+  pool.query(
+    "SELECT * FROM sets WHERE owner = $1",
+    [owner],
+    (error, results) => {
+      response.status(200).json(results.rows);
+    }
+  );
+};
 
 const createSet = (request, response) => {
   const { setName, owner } = request.body;
@@ -108,6 +112,51 @@ const createSet = (request, response) => {
   );
 };
 
+const createCard = (request, response) => {
+  const { front, back } = request.body;
+
+  pool.query(
+    "INSERT INTO cards (front, back) VALUES ($1, $2) RETURNING *",
+    [front, back],
+    (error, results) => {
+      if (error) {
+        response.status(200).send(`${error}`);
+        throw error;
+      } else {
+        response
+          .status(200)
+          .send(`Card added with ID: ${results.rows[0].card_id}`);
+      }
+    }
+  );
+};
+
+const getCards = (request, response) => {
+  pool.query("SELECT * FROM cards ORDER BY card_id ASC", (error, results) => {
+    response.status(200).json(results.rows);
+  });
+}
+
+
+const getCardsFromSet = (request, response) => {
+  const setId = request.params.id;
+  pool.query("SELECT cards FROM sets WHERE set_id = $1", [setId], (error, results) => {
+    response.status(200).json(results.rows);
+  });
+}
+
+const addCardsToSet = (request, response) => {
+  const setId = request.params.id;
+  const {cards} = request.body.cards;
+  pool.query("UPDATE sets SET cards = $1 WHERE set_id = $2", [cards, setId],
+  (error, results) => {
+    if (error) {
+      response.status(200).send(`${error}`)
+    } else response.status(200).send(`Added cards to set with ID: ${setId}`);
+  })
+}
+
+
 module.exports = {
   getUsers,
   getUserByUsername,
@@ -117,4 +166,8 @@ module.exports = {
   getSets,
   getSetsByOwner,
   createSet,
+  createCard,
+  getCards,
+  getCardsFromSet,
+  addCardsToSet
 };
