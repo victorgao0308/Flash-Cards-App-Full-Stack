@@ -22,8 +22,8 @@ return (
 		<NavLink to='/Sets'>
 			Sets
 		</NavLink>
-		<NavLink to='/Study'>
-			Study
+		<NavLink to='/Review'>
+			Review
 		</NavLink>
 		</NavMenu>
 

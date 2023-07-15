@@ -4,6 +4,7 @@
     height: 5rem;
     border: 2px solid black;
     border-radius: 5px;
+    overflow: hidden;
 }
 
 
@@ -16,9 +17,11 @@
     max-width: 95%;
     transform: translate(-50%, -50%);
     word-wrap: break-word;
-    white-space: normal;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     user-select: none;
+    font-size: 1rem;
 }
 
 .hide {

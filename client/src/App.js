@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home"
 import Menu from "./Pages/Menu";
 import Sets from "./Pages/Sets";
-import Study from "./Pages/Study";
+import Review from "./Pages/Review";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import ViewSet from "./Pages/ViewSet";
@@ -25,7 +25,7 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/menu" element={<Menu/>} />
         <Route path="/sets" element={<Sets/>} />
-        <Route path="/study" element={<Study/>} />
+        <Route path="/review" element={<Review/>} />
         <Route path="/signIn" element={<SignIn/>} />
         <Route path="/signUp" element={<SignUp/>} />
         <Route path="/viewset" element={<ViewSet/>} />

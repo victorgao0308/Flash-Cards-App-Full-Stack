@@ -88,8 +88,6 @@ const ViewSet = () => {
     if (cards == null) return;
 
     cards = cards.sort((a,b) => sortCardsById(a,b));
-    console.log(cards);
-
     cards.forEach((card) => {
       addNewCard(
         currentCards = currentCards.concat(
@@ -214,6 +212,7 @@ const ViewSet = () => {
         <button onClick={toggleAddCardMenu}>Add Card</button>
         <button>Edit Set Name</button>
         <button>Delete Set</button>
+        <button onClick = {studySet}>Study Set</button>
       </div>
 
       <div className="add-card-menu hide">
@@ -261,4 +260,9 @@ function flipCard() {
 function toggleAddCardMenu() {
   const addCardMenu = document.querySelector(".add-card-menu");
   addCardMenu.classList.toggle("hide");
+}
+
+function studySet() {
+  localStorage.setItem("reviewing set", JSON.stringify(setId));
+  window.location.href = "/review"
 }
