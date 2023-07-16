@@ -1,9 +1,12 @@
 import React from "react";
-import "../CSS/Review.css"
+import "../CSS/Review.css";
+import StudyCard from "../Components/StudyCard";
 
 
 let setId;
 let set;
+let studyCards = [];
+let cardWidth;
 
 const Review = () => {
   localStorage.setItem("sets loaded", JSON.stringify("false"));
@@ -17,24 +20,12 @@ const Review = () => {
       <div className="review-container">
         <h2 className="review-progress">1/69420</h2>
         <div className="review-card-container">
-
-          <div className="review-card" onClick={flipCard}>
-            <div className="review-card-front">wow</div>
-            <div className="review-card-back">wow back</div>
-          </div>
-
-          <div className="review-card" onClick={flipCard} style={{left: `150%`} }>
-            <div className="review-card-front">wow</div>
-            <div className="review-card-back">wow back</div>
-          </div>
-
-
+          {studyCards}
         </div>
 
-
         <div className="review-btns-container">
-          <button>Prev</button>
-          <button>Next</button>
+          <button onClick={prevCard}>Prev</button>
+          <button onClick={nextCard}>Next</button>
         </div>
       </div>
     </>
@@ -48,10 +39,39 @@ function getSetToReview() {
   set = JSON.parse(localStorage.getItem(`set: ${setId}`));
 }
 
-function flipCard() {
-  const cardFront = document.querySelector(".review-card-front");
-  const cardBack = document.querySelector(".review-card-back");
 
-  cardFront.classList.toggle("flipped");
-  cardBack.classList.toggle("flipped");
+let cardNum = 0;
+function nextCard() {
+  cardNum++;
+  if(cardNum >= studyCards.length) cardNum = 0;
+  moveCards(cardNum);
 }
+
+function prevCard() {
+  cardNum--;
+  if (cardNum < 0) cardNum = studyCards.length - 1;
+  moveCards(cardNum);
+}
+
+function moveCards(cardNum) {
+  studyCards.forEach(card => {
+    const cardElement = document.getElementById(`card: ${card.props.id}`);
+    cardWidth = cardElement.getBoundingClientRect().width;
+
+    cardElement.style.transform = `translateX(-${(cardNum * cardWidth) / 0.8}px)`;
+  });
+}
+
+
+studyCards.push(<StudyCard key = {0} id = {0}/>);
+studyCards.push(<StudyCard key = {1} id = {1}/>);
+
+// adjust review cards' scroll distance if window gets resized
+window.addEventListener("resize", () => {
+  studyCards.forEach(card => {
+    const cardElement = document.getElementById(`card: ${card.props.id}`);
+    cardWidth = cardElement.getBoundingClientRect().width;
+
+    cardElement.style.transform = `translateX(-${(cardNum * cardWidth) / 0.8}px)`;
+  });
+});

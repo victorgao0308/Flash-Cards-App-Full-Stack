@@ -6,9 +6,9 @@ TODO:
 3. ability to edit/delete sets
 
 
-5. ability to add cards to database
-
 
 6. ability to review cards
+
+
 7. ability to study cards
 8. Explore sets feature
