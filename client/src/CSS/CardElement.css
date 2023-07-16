@@ -9,19 +9,26 @@
 
 
 .card-front-text, .card-back-text {
-    position: relative;
+    position: absolute;
     text-align: center;
     margin: 0;
     left: 50%;
-    top: 50%;
-    max-width: 95%;
-    transform: translate(-50%, -50%);
+    top: 0%;
+    width: 95%;
+    transform: translate(-50%);
     word-wrap: break-word;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     user-select: none;
-    font-size: 1rem;
+    font-size: 0.9rem;
+}
+
+.edit-card-icon {
+    position: absolute;
+    right: 0;
+    z-index: 2;
+}
+
+.edit-card-icon:hover {
+    cursor: pointer;
 }
 
 .hide {

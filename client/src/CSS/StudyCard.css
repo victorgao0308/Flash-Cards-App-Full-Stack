@@ -18,6 +18,9 @@
     border: 2px solid black;
     width: 100%;
     height: 100%;
+    text-align: center;
+    word-break: break-all;
+    overflow: hidden;
   }
   
   .review-card-back {

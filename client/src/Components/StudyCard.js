@@ -12,8 +12,8 @@ const StudyCard = (prop) => {
 
   return (
     <div className="review-card" onClick={flipCard} style={{left: `${prop.id * 100 + 10}%`}} id = {`card: ${prop.id}`}>
-      <div className="review-card-front" id = {`front: ${prop.id}`}>wow</div>
-      <div className="review-card-back" id = {`back: ${prop.id}`}>wow back</div>
+      <div className="review-card-front" id = {`front: ${prop.id}`}>{prop.front}</div>
+      <div className="review-card-back" id = {`back: ${prop.id}`}>{prop.back}</div>
     </div>
   );
 };

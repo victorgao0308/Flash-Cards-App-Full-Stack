@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import CardElement from "../Components/CardElement";
 import "../CSS/ViewSet.css";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 
 let setId;
 let set;
@@ -63,7 +65,6 @@ const ViewSet = () => {
       getCardById(card);
     });
 
-
     async function getCardById(cardId) {
       await axios.get(`http://localhost:8000/cards/${cardId}`).then((res) => {
         newCards.push(res.data[0]);
@@ -87,22 +88,22 @@ const ViewSet = () => {
     let cards = set.cards;
     if (cards == null) return;
 
-    cards = cards.sort((a,b) => sortCardsById(a,b));
+    cards = cards.sort((a, b) => sortCardsById(a, b));
     cards.forEach((card) => {
       addNewCard(
-        currentCards = currentCards.concat(
+        (currentCards = currentCards.concat(
           <CardElement
             key={currentCards.length}
             card_id={card.card_id}
             card_front={card.front}
             card_back={card.back}
           />
-        )
+        ))
       );
     });
   }
 
-  function sortCardsById (a,b) {
+  function sortCardsById(a, b) {
     const a_id = parseInt(a.card_id);
     const b_id = parseInt(b.card_id);
 
@@ -202,6 +203,11 @@ const ViewSet = () => {
     localStorage.setItem(`set: ${setId}`, JSON.stringify(currentSet));
     localStorage.setItem("num cards", JSON.stringify(numCards));
   }
+
+  function editCard() {
+    const editMenu = document.querySelector(".edit-card-menu");
+    editMenu.classList.toggle("hide");
+  }
   return (
     <>
       <h1 className="view-set-header">
@@ -212,10 +218,13 @@ const ViewSet = () => {
         <button onClick={toggleAddCardMenu}>Add Card</button>
         <button>Edit Set Name</button>
         <button>Delete Set</button>
-        <button onClick = {studySet}>Study Set</button>
+        <button onClick={reviewSet}>Review Set</button>
+        <button onClick={toggleEditBtns}>Edit Cards</button>
       </div>
 
       <div className="add-card-menu hide">
+        <FontAwesomeIcon icon={faX} className="close-add-card-menu" onClick={closeAddCardmenu}/>
+        <h2 className="add-card-header">Add Card</h2>
         <h4 className="card-side-descriptor">Card Front</h4>
         <textarea
           className="card-front-input"
@@ -229,6 +238,25 @@ const ViewSet = () => {
         <div className="add-card-btn-container">
           <button onClick={flipCard}>Flip card</button>
           <button onClick={addCard}>Done</button>
+        </div>
+      </div>
+
+      <div className="edit-card-menu hide">
+        <FontAwesomeIcon icon={faX} className="close-edit-card-menu"  onClick={closeEditCardmenu}/>
+        <h2 className="edit-card-header">Edit Card</h2>
+        <h4 className="edit-side-descriptor">Card Front</h4>
+        <textarea
+          className="edit-card-front-input"
+          placeholder="Add a card"
+        ></textarea>
+        <textarea
+          className="edit-card-back-input hide"
+          placeholder="Add a description"
+        ></textarea>
+
+        <div className="edit-card-btn-container">
+          <button onClick={flipEditCard}>Flip card</button>
+          <button onClick={editCard}>Done</button>
         </div>
       </div>
 
@@ -257,12 +285,44 @@ function flipCard() {
   else cardSide.innerHTML = "Card Front";
 }
 
+function flipEditCard() {
+  const cardFront = document.querySelector(".edit-card-front-input");
+  const cardBack = document.querySelector(".edit-card-back-input");
+  const cardSide = document.querySelector(".edit-side-descriptor");
+
+  cardFront.classList.toggle("hide");
+  cardBack.classList.toggle("hide");
+
+  if (cardSide.innerHTML === "Card Front") cardSide.innerHTML = "Card Back";
+  else cardSide.innerHTML = "Card Front";
+}
+
 function toggleAddCardMenu() {
   const addCardMenu = document.querySelector(".add-card-menu");
+  const editCardMenu = document.querySelector(".edit-card-menu");
+  if (!editCardMenu.classList.contains("hide"))
+    editCardMenu.classList.add("hide");
   addCardMenu.classList.toggle("hide");
 }
 
-function studySet() {
+function reviewSet() {
   localStorage.setItem("reviewing set", JSON.stringify(setId));
-  window.location.href = "/review"
+  window.location.href = "/review";
+}
+
+function toggleEditBtns() {
+  const btns = document.querySelectorAll(".edit-card-icon");
+  btns.forEach((btn) => {
+    btn.classList.toggle("hide");
+  });
+}
+
+function closeAddCardmenu() {
+  const addCardMenu = document.querySelector(".add-card-menu");
+  addCardMenu.classList.add("hide");
+}
+
+function closeEditCardmenu() {
+  const editCardMenu = document.querySelector(".edit-card-menu");
+  editCardMenu.classList.add("hide");
 }

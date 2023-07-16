@@ -23,7 +23,7 @@
   left: 50%;
   transform: translate(-50%);
   border-radius: 3px;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .review-btns-container {
