@@ -2,6 +2,8 @@ import React from "react";
 import "../CSS/CardElement.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+
 
 const CardElement = (prop) => {
   function flipCard() {
@@ -70,6 +72,22 @@ const CardElement = (prop) => {
       editCard.back = back;
     });
     localStorage.setItem(`set: ${setId}`, JSON.stringify(set));
+
+    let user = localStorage.getItem("signed in as") ? JSON.parse(localStorage.getItem("signed in as")) : null;
+
+    if (user) editCardDB(id, front, back);
+  }
+
+  async function editCardDB(id, front, back) {
+    console.log(front, back)
+    await axios
+    .put(`http://localhost:8000/cards/edit/${id}`, {
+      front: `${front}`,
+      back: `${back}`
+    })
+    .then((res) => {
+      console.log(res.data);
+    });
   }
 
   return (

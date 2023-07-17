@@ -167,6 +167,17 @@ const getCardById = (request, response) => {
   );
 }
 
+const editCard = (request, response) => {
+  const cardId = request.params.id;
+  const { front, back } = request.body;
+  pool.query("UPDATE cards SET front = $1, back = $2 WHERE card_id = $3", [front, back, cardId],
+  (error, results) => {
+    if (error) {
+      response.status(200).send(`${error}`)
+    } else response.status(200).send(`Update card with ID: ${cardId}`);
+  })
+}
+
 
 module.exports = {
   getUsers,
@@ -181,5 +192,6 @@ module.exports = {
   getCards,
   getCardsFromSet,
   addCardsToSet,
-  getCardById
+  getCardById,
+  editCard
 };
