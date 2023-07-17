@@ -204,10 +204,7 @@ const ViewSet = () => {
     localStorage.setItem("num cards", JSON.stringify(numCards));
   }
 
-  function editCard() {
-    const editMenu = document.querySelector(".edit-card-menu");
-    editMenu.classList.toggle("hide");
-  }
+
   return (
     <>
       <h1 className="view-set-header">
@@ -242,21 +239,21 @@ const ViewSet = () => {
       </div>
 
       <div className="edit-card-menu hide">
-        <FontAwesomeIcon icon={faX} className="close-edit-card-menu"  onClick={closeEditCardmenu}/>
+        <FontAwesomeIcon icon={faX} className="close-edit-card-menu"/>
         <h2 className="edit-card-header">Edit Card</h2>
         <h4 className="edit-side-descriptor">Card Front</h4>
         <textarea
           className="edit-card-front-input"
-          placeholder="Add a card"
+          placeholder="Edit card value"
         ></textarea>
         <textarea
           className="edit-card-back-input hide"
-          placeholder="Add a description"
+          placeholder="Edit description"
         ></textarea>
 
         <div className="edit-card-btn-container">
           <button onClick={flipEditCard}>Flip card</button>
-          <button onClick={editCard}>Done</button>
+          <button className="edit-card-done-btn">Done</button>
         </div>
       </div>
 
@@ -319,10 +316,14 @@ function toggleEditBtns() {
 
 function closeAddCardmenu() {
   const addCardMenu = document.querySelector(".add-card-menu");
+  const cardSide = document.querySelector(".card-side-descriptor");
+  if (cardSide.innerHTML === "Card Back") {
+    cardSide.innerHTML = "Card Front";
+    const cardFront = document.querySelector(".card-front-input");
+    const cardBack = document.querySelector(".card-back-input");
+    cardFront.classList.toggle("hide");
+    cardBack.classList.toggle("hide");
+  }
   addCardMenu.classList.add("hide");
 }
 
-function closeEditCardmenu() {
-  const editCardMenu = document.querySelector(".edit-card-menu");
-  editCardMenu.classList.add("hide");
-}
