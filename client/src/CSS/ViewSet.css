@@ -11,7 +11,8 @@
 
 .add-card-menu,
 .edit-card-menu,
-.delete-card-menu {
+.delete-card-menu,
+.edit-set-menu {
   position: absolute;
   width: 40%;
   height: 40%;
@@ -56,7 +57,8 @@
 
 .close-add-card-menu,
 .close-edit-card-menu,
-.close-delete-card-menu {
+.close-delete-card-menu,
+.close-edit-set-menu {
   position: absolute;
   right: 3px;
   top: 3px;
@@ -65,7 +67,8 @@
 
 .close-add-card-menu:hover,
 .close-edit-card-menu:hover,
-.close-delete-card-menu:hover {
+.close-delete-card-menu:hover,
+.close-edit-set-menu:hover {
   cursor: pointer;
   transform: rotate(180deg);
 }
@@ -82,7 +85,8 @@
 
 .add-card-header,
 .edit-card-header,
-.delete-card-header {
+.delete-card-header,
+.edit-set-header {
   margin: 0;
   text-align: center;
 }
@@ -100,6 +104,21 @@
   position: absolute;
   max-width: 95%;
   word-wrap: break-word;
+}
+
+.edit-set-input {
+  outline: none;
+  position: absolute;
+  width: 50%;
+  left: 25%;
+  top: 40%;
+}
+
+.edit-set-btn {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 10%;
 }
 
 .hide {

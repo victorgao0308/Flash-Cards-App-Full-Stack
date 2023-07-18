@@ -80,14 +80,13 @@ const CardElement = (prop) => {
   }
 
   async function editCardDB(id, front, back) {
-    console.log(front, back);
     await axios
       .put(`http://localhost:8000/cards/edit/${id}`, {
         front: `${front}`,
         back: `${back}`,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
       });
   }
 

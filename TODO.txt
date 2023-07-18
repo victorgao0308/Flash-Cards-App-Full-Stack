@@ -2,7 +2,7 @@ TODO:
 
 
 update user's sets owned column in database
-ability to edit/delete sets/cards
+ability to edit/delete sets
 ability to study cards
 Explore sets feature
 stats/insights Pages

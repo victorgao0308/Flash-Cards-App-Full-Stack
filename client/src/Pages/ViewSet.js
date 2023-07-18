@@ -212,7 +212,7 @@ const ViewSet = () => {
 
       <div className="set-btns-container">
         <button onClick={toggleAddCardMenu}>Add Card</button>
-        <button>Edit Set Name</button>
+        <button onClick={toggleEditSetMenu}>Edit Set Name</button>
         <button>Delete Set</button>
         <button onClick={reviewSet}>Review Set</button>
         <button onClick={toggleEditBtns}>Edit Cards</button>
@@ -270,6 +270,18 @@ const ViewSet = () => {
           <button className="delete-card-no">No</button>
           <button className="delete-card-yes">Yes</button>
         </div>
+      </div>
+
+
+      <div className="edit-set-menu hide">
+      <FontAwesomeIcon
+          icon={faX}
+          className="close-edit-set-menu"
+          onClick={toggleEditSetMenu}
+        />
+        <h2 className="edit-set-header">Edit Set Name</h2>
+        <input className="edit-set-input" placeholder="New set name"></input>
+        <button className="edit-set-btn" onClick={editSet}>Done</button>
       </div>
 
       <div className="cards-container">{currentCards}</div>
@@ -347,4 +359,46 @@ function closeAddCardmenu() {
     cardBack.classList.toggle("hide");
   }
   addCardMenu.classList.add("hide");
+}
+
+function toggleEditSetMenu() {
+  const editSetMenu = document.querySelector(".edit-set-menu");
+  const editSetInput = document.querySelector(".edit-set-input");
+  let setName = document.querySelector(".view-set-header").innerHTML;
+  setName = setName.substring(12);
+  editSetInput.value = setName;
+  editSetMenu.classList.toggle("hide");
+}
+
+function editSet() {
+  const editSetMenu = document.querySelector(".edit-set-menu");
+  const newSetName = document.querySelector(".edit-set-input").value;
+  const setName = document.querySelector(".view-set-header");
+  setName.innerHTML = `Viewing set ${newSetName}`;
+  editSetMenu.classList.toggle("hide");
+  editSetLocalStorage(newSetName)
+}
+
+
+function editSetLocalStorage(newName) {
+  let set = JSON.parse(localStorage.getItem(`set: ${setId}`));
+  if (!set) return;
+  set.set_name = newName;
+  localStorage.setItem(`set: ${setId}`, JSON.stringify(set));
+
+  let user = localStorage.getItem("signed in as")
+  ? JSON.parse(localStorage.getItem("signed in as"))
+  : null;
+
+  if (user) editSetDB(newName);
+}
+
+async function editSetDB(newName) {
+  await axios
+  .put(`http://localhost:8000/sets/edit/${setId}`, {
+    set_name: `${newName}`,
+  })
+  .then((res) => {
+    // console.log(res.data);
+  });
 }

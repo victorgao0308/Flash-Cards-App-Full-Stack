@@ -156,6 +156,17 @@ const addCardsToSet = (request, response) => {
   })
 }
 
+const editSetName = (request, response) => {
+  const setId = request.params.id;
+  const setName  = request.body.set_name;
+  pool.query("UPDATE sets SET set_name = $1 WHERE set_id = $2", [setName, setId],
+  (error, results) => {
+    if (error) {
+      response.status(200).send(`${error}`)
+    } else response.status(200).send(`Updated set ${setId} to ${setName}`);
+  })
+}
+
 const getCardById = (request, response) => {
   const cardId = request.params.id;
   pool.query(
@@ -201,5 +212,6 @@ module.exports = {
   addCardsToSet,
   getCardById,
   editCard,
-  deleteCard
+  deleteCard,
+  editSetName
 };
