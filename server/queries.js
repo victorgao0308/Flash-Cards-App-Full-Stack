@@ -178,6 +178,13 @@ const editCard = (request, response) => {
   })
 }
 
+const deleteCard = (request, response) => {
+  const cardId = request.params.id;
+  pool.query("DELETE FROM cards WHERE card_id = $1", [cardId], (error, results) => {
+    if (error) response.status(200).send(`${error}`);
+    else response.status(200).send(`Card deleted with ID: ${cardId}`);
+  });
+}
 
 module.exports = {
   getUsers,
@@ -193,5 +200,6 @@ module.exports = {
   getCardsFromSet,
   addCardsToSet,
   getCardById,
-  editCard
+  editCard,
+  deleteCard
 };

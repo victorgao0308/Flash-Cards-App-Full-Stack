@@ -21,13 +21,14 @@
     font-size: 0.9rem;
 }
 
-.edit-card-icon {
+.edit-delete-container {
     position: absolute;
     right: 0;
     z-index: 2;
 }
+ 
 
-.edit-card-icon:hover {
+.edit-card-icon:hover, .delete-card-icon:hover {
     cursor: pointer;
 }
 

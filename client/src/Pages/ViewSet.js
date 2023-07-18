@@ -204,7 +204,6 @@ const ViewSet = () => {
     localStorage.setItem("num cards", JSON.stringify(numCards));
   }
 
-
   return (
     <>
       <h1 className="view-set-header">
@@ -217,10 +216,15 @@ const ViewSet = () => {
         <button>Delete Set</button>
         <button onClick={reviewSet}>Review Set</button>
         <button onClick={toggleEditBtns}>Edit Cards</button>
+        <button onClick={toggleDeleteBtns}>Delete Cards</button>
       </div>
 
       <div className="add-card-menu hide">
-        <FontAwesomeIcon icon={faX} className="close-add-card-menu" onClick={closeAddCardmenu}/>
+        <FontAwesomeIcon
+          icon={faX}
+          className="close-add-card-menu"
+          onClick={closeAddCardmenu}
+        />
         <h2 className="add-card-header">Add Card</h2>
         <h4 className="card-side-descriptor">Card Front</h4>
         <textarea
@@ -239,7 +243,7 @@ const ViewSet = () => {
       </div>
 
       <div className="edit-card-menu hide">
-        <FontAwesomeIcon icon={faX} className="close-edit-card-menu"/>
+        <FontAwesomeIcon icon={faX} className="close-edit-card-menu" />
         <h2 className="edit-card-header">Edit Card</h2>
         <h4 className="edit-side-descriptor">Card Front</h4>
         <textarea
@@ -254,6 +258,17 @@ const ViewSet = () => {
         <div className="edit-card-btn-container">
           <button onClick={flipEditCard}>Flip card</button>
           <button className="edit-card-done-btn">Done</button>
+        </div>
+      </div>
+
+      <div className="delete-card-menu hide">
+        <FontAwesomeIcon icon={faX} className="close-delete-card-menu" />
+
+        <h2 className="delete-card-header">Delete Card</h2>
+        <h4 className="delete-card-descriptor">Delete Card ""?</h4>
+        <div className="delete-card-menu-btns-container">
+          <button className="delete-card-no">No</button>
+          <button className="delete-card-yes">Yes</button>
         </div>
       </div>
 
@@ -314,6 +329,13 @@ function toggleEditBtns() {
   });
 }
 
+function toggleDeleteBtns() {
+  const btns = document.querySelectorAll(".delete-card-icon");
+  btns.forEach((btn) => {
+    btn.classList.toggle("hide");
+  });
+}
+
 function closeAddCardmenu() {
   const addCardMenu = document.querySelector(".add-card-menu");
   const cardSide = document.querySelector(".card-side-descriptor");
@@ -326,4 +348,3 @@ function closeAddCardmenu() {
   }
   addCardMenu.classList.add("hide");
 }
-

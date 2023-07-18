@@ -10,7 +10,8 @@
 }
 
 .add-card-menu,
-.edit-card-menu {
+.edit-card-menu,
+.delete-card-menu {
   position: absolute;
   width: 40%;
   height: 40%;
@@ -24,7 +25,8 @@
 }
 
 .add-card-menu h4,
-.edit-card-menu h4 {
+.edit-card-menu h4,
+.delete-card-menu h4 {
   text-align: center;
   margin: 10px;
 }
@@ -53,15 +55,17 @@
 }
 
 .close-add-card-menu,
-.close-edit-card-menu {
+.close-edit-card-menu,
+.close-delete-card-menu {
   position: absolute;
   right: 3px;
   top: 3px;
-  transition: transform .7s ease-in-out;
+  transition: transform 0.7s ease-in-out;
 }
 
 .close-add-card-menu:hover,
-.close-edit-card-menu:hover {
+.close-edit-card-menu:hover,
+.close-delete-card-menu:hover {
   cursor: pointer;
   transform: rotate(180deg);
 }
@@ -76,9 +80,26 @@
   top: 3px;
 }
 
-.add-card-header, .edit-card-header {
+.add-card-header,
+.edit-card-header,
+.delete-card-header {
   margin: 0;
   text-align: center;
+}
+
+.delete-card-menu-btns-container {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translate(-50%);
+  display: flex;
+  gap: 3px;
+}
+
+.delete-card-descriptor {
+  position: absolute;
+  max-width: 95%;
+  word-wrap: break-word;
 }
 
 .hide {
