@@ -25,6 +25,9 @@ return (
 		<NavLink to='/Review'>
 			Review
 		</NavLink>
+		<NavLink to='/Study'>
+			Study
+		</NavLink>
 		</NavMenu>
 
 		<NavBtn>

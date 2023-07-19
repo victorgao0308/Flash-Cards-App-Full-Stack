@@ -8,6 +8,7 @@ import Review from "./Pages/Review";
 import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import ViewSet from "./Pages/ViewSet";
+import Study from "./Pages/Study";
 
 function App() {
   // const [message, setMessage] = useState("");
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signIn" element={<SignIn/>} />
         <Route path="/signUp" element={<SignUp/>} />
         <Route path="/viewset" element={<ViewSet/>} />
+        <Route path="/study" element={<Study/>} />
       </Routes>
     </Router>
   );

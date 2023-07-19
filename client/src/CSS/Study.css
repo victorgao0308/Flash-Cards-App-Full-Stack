@@ -1,0 +1,43 @@
+.study-header {
+    margin: 0
+}
+
+.study-container {
+    position: absolute;
+    width: 90%;
+    height: 70%;
+    left: 5%;
+    bottom: 5%;
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  .study-card-container {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 70%;
+    height: 80%;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 3px;
+    /* overflow: hidden; */
+  }
+
+  .study-btns-container {
+    position: absolute;
+    left: 50%;
+    bottom: 2.5%;
+    transform: translate(-50%);
+    text-align: center;
+  }
+  
+  .study-descriptor, .study-progress {
+    margin: 0;
+  }
+  
+  .hide {
+    display: none;
+  }

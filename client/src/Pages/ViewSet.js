@@ -214,9 +214,10 @@ const ViewSet = () => {
         <button onClick={toggleAddCardMenu}>Add Card</button>
         <button onClick={toggleEditSetMenu}>Edit Set Name</button>
         <button onClick={toggleDeleteSetMenu}>Delete Set</button>
-        <button onClick={reviewSet}>Review Set</button>
         <button onClick={toggleEditBtns}>Edit Cards</button>
         <button onClick={toggleDeleteBtns}>Delete Cards</button>
+        <button onClick={reviewSet}>Review Set</button>
+        <button onClick={studySet}>Study Set</button>
       </div>
 
       <div className="add-card-menu hide">
@@ -355,6 +356,11 @@ function toggleAddCardMenu() {
 function reviewSet() {
   localStorage.setItem("reviewing set", JSON.stringify(setId));
   window.location.href = "/review";
+}
+
+function studySet() {
+  localStorage.setItem("studying set", JSON.stringify(setId));
+  window.location.href = "/study";
 }
 
 function toggleEditBtns() {
