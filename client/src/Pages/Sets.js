@@ -164,6 +164,7 @@ const Sets = () => {
             type="text"
             placeholder="Set Name"
             className="set-name-input"
+            name = "set-name-input"
           ></input>
         </div>
 

@@ -12,7 +12,8 @@
 .add-card-menu,
 .edit-card-menu,
 .delete-card-menu,
-.edit-set-menu {
+.edit-set-menu,
+.delete-set-menu {
   position: absolute;
   width: 40%;
   height: 40%;
@@ -27,7 +28,8 @@
 
 .add-card-menu h4,
 .edit-card-menu h4,
-.delete-card-menu h4 {
+.delete-card-menu h4,
+.delete-set-menu h4 {
   text-align: center;
   margin: 10px;
 }
@@ -58,7 +60,8 @@
 .close-add-card-menu,
 .close-edit-card-menu,
 .close-delete-card-menu,
-.close-edit-set-menu {
+.close-edit-set-menu,
+.close-delete-set-menu {
   position: absolute;
   right: 3px;
   top: 3px;
@@ -68,7 +71,8 @@
 .close-add-card-menu:hover,
 .close-edit-card-menu:hover,
 .close-delete-card-menu:hover,
-.close-edit-set-menu:hover {
+.close-edit-set-menu:hover,
+.close-delete-set-menu:hover {
   cursor: pointer;
   transform: rotate(180deg);
 }
@@ -86,12 +90,14 @@
 .add-card-header,
 .edit-card-header,
 .delete-card-header,
-.edit-set-header {
+.edit-set-header,
+.delete-set-header {
   margin: 0;
   text-align: center;
 }
 
-.delete-card-menu-btns-container {
+.delete-card-menu-btns-container,
+.delete-set-menu-btns-container {
   position: absolute;
   left: 50%;
   bottom: 5%;

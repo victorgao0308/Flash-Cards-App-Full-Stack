@@ -213,7 +213,7 @@ const ViewSet = () => {
       <div className="set-btns-container">
         <button onClick={toggleAddCardMenu}>Add Card</button>
         <button onClick={toggleEditSetMenu}>Edit Set Name</button>
-        <button>Delete Set</button>
+        <button onClick={toggleDeleteSetMenu}>Delete Set</button>
         <button onClick={reviewSet}>Review Set</button>
         <button onClick={toggleEditBtns}>Edit Cards</button>
         <button onClick={toggleDeleteBtns}>Delete Cards</button>
@@ -272,18 +272,41 @@ const ViewSet = () => {
         </div>
       </div>
 
-
       <div className="edit-set-menu hide">
-      <FontAwesomeIcon
+        <FontAwesomeIcon
           icon={faX}
           className="close-edit-set-menu"
           onClick={toggleEditSetMenu}
         />
         <h2 className="edit-set-header">Edit Set Name</h2>
-        <input className="edit-set-input" placeholder="New set name"></input>
-        <button className="edit-set-btn" onClick={editSet}>Done</button>
+        <input
+          className="edit-set-input"
+          name="edit-set-input"
+          placeholder="New set name"
+        ></input>
+        <button className="edit-set-btn" onClick={editSet}>
+          Done
+        </button>
       </div>
 
+      <div className="delete-set-menu hide">
+        <FontAwesomeIcon
+          icon={faX}
+          className="close-delete-set-menu"
+          onClick={toggleDeleteSetMenu}
+        />
+        <h2 className="delete-set-header">Delete Set</h2>
+        <h4 className="delete-set-descriptor">Delete Set ""?</h4>
+
+        <div className="delete-set-menu-btns-container">
+          <button className="delete-set-no" onClick={toggleDeleteSetMenu}>
+            No
+          </button>
+          <button className="delete-set-yes" onClick={deleteSetLocalStorage}>
+            Yes
+          </button>
+        </div>
+      </div>
       <div className="cards-container">{currentCards}</div>
     </>
   );
@@ -370,15 +393,21 @@ function toggleEditSetMenu() {
   editSetMenu.classList.toggle("hide");
 }
 
+function toggleDeleteSetMenu() {
+  const deleteSetMenu = document.querySelector(".delete-set-menu");
+  deleteSetMenu.classList.toggle("hide");
+  const deleteSetDescriptor = document.querySelector(".delete-set-descriptor");
+  deleteSetDescriptor.innerHTML = `Delete Set "${set.set_name}?" All of this set's associated cards will also be deleted.`;
+}
+
 function editSet() {
   const editSetMenu = document.querySelector(".edit-set-menu");
   const newSetName = document.querySelector(".edit-set-input").value;
   const setName = document.querySelector(".view-set-header");
   setName.innerHTML = `Viewing set ${newSetName}`;
   editSetMenu.classList.toggle("hide");
-  editSetLocalStorage(newSetName)
+  editSetLocalStorage(newSetName);
 }
-
 
 function editSetLocalStorage(newName) {
   let set = JSON.parse(localStorage.getItem(`set: ${setId}`));
@@ -387,18 +416,49 @@ function editSetLocalStorage(newName) {
   localStorage.setItem(`set: ${setId}`, JSON.stringify(set));
 
   let user = localStorage.getItem("signed in as")
-  ? JSON.parse(localStorage.getItem("signed in as"))
-  : null;
+    ? JSON.parse(localStorage.getItem("signed in as"))
+    : null;
 
   if (user) editSetDB(newName);
 }
 
+function deleteSetLocalStorage() {
+  localStorage.removeItem(`set: ${setId}`);
+  window.location.href = "./Sets";
+  let user = localStorage.getItem("signed in as")
+    ? JSON.parse(localStorage.getItem("signed in as"))
+    : null;
+  if (user) deleteCardsFromSet();
+}
+
+async function deleteSetDB() {
+  await axios.delete(`http://localhost:8000/sets/delete/${setId}`);
+  // .then((res) => console.log(res));
+}
+
+async function deleteCardsFromSet() {
+  await axios.get(`http://localhost:8000/sets/cards/${setId}`).then((res) => {
+    let cards = res.data[0].cards;
+    cards.forEach(card=> {
+      deleteCard(card);
+    })
+  });
+  deleteSetDB();
+}
+async function deleteCard(cardId) {
+  await axios
+    .delete(`http://localhost:8000/cards/delete/${cardId}`)
+    .then((res) => {
+      // console.log(res);
+    });
+}
+
 async function editSetDB(newName) {
   await axios
-  .put(`http://localhost:8000/sets/edit/${setId}`, {
-    set_name: `${newName}`,
-  })
-  .then((res) => {
-    // console.log(res.data);
-  });
+    .put(`http://localhost:8000/sets/edit/${setId}`, {
+      set_name: `${newName}`,
+    })
+    .then((res) => {
+      // console.log(res.data);
+    });
 }

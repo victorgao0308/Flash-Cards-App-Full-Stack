@@ -167,6 +167,14 @@ const editSetName = (request, response) => {
   })
 }
 
+const deleteSet = (request, response) => {
+  const setId = request.params.id;
+  pool.query("DELETE FROM sets WHERE set_id = $1", [setId], (error, results) => {
+    if (error) response.status(200).send(`${error}`);
+    else response.status(200).send(`Set deleted with ID: ${setId}`);
+  });
+}
+
 const getCardById = (request, response) => {
   const cardId = request.params.id;
   pool.query(
@@ -197,6 +205,7 @@ const deleteCard = (request, response) => {
   });
 }
 
+
 module.exports = {
   getUsers,
   getUserByUsername,
@@ -213,5 +222,6 @@ module.exports = {
   getCardById,
   editCard,
   deleteCard,
-  editSetName
+  editSetName,
+  deleteSet
 };

@@ -33,7 +33,8 @@ app.delete("/users/:id", db.deleteUser);
 app.post("/sets", db.createSet);
 app.get("/sets", db.getSets);
 app.get("/sets/:owner", db.getSetsByOwner);
-app.put("/sets/edit/:id", db.editSetName)
+app.put("/sets/edit/:id", db.editSetName);
+app.delete("/sets/delete/:id", db.deleteSet)
 
 
 // cards

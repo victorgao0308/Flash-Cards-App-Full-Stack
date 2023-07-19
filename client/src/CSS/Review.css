@@ -34,6 +34,10 @@
   text-align: center;
 }
 
+.review-descriptor {
+  margin: 0;
+}
+
 .hide {
   display: none;
 }
