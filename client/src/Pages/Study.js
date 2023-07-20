@@ -1,12 +1,14 @@
 import React from "react";
 import "../CSS/Study.css";
 import StudyCard from "../Components/StudyCard";
+import MCQCard from "../Components/MCQCard";
 
 let studyingSet;
 let studyProgress;
 let noSetToLoad;
 let studyCards = [];
 let set;
+let cardWidth;
 
 const Study = () => {
   localStorage.setItem("sets loaded", JSON.stringify("false"));
@@ -23,7 +25,7 @@ const Study = () => {
         <h2 className="study-progress">{studyProgress}</h2>
         <div className="study-card-container">{studyCards}</div>
         <div className="study-btns-container">
-          <button>Next</button>
+          <button onClick={nextCard}>Next</button>
         </div>
       </div>
     </>
@@ -50,10 +52,14 @@ function loadStudyCards() {
     return;
   }
   cards = cards.sort((a, b) => sortCardsById(a, b));
-  studyProgress = `1/${cards.length}`;
+  studyProgress = `1/${cards.length} | Learn`;
+
+
+
+
   cards.forEach((card, index) => {
     studyCards.push(
-      <StudyCard key={index} id={index} front={card.front} back={card.back} />
+      <MCQCard key={index} id={index} front={card.front} back={card.back} />
     );
   });
 }
@@ -65,4 +71,27 @@ function sortCardsById(a, b) {
   if (a_id > b_id) return 1;
   if (b_id > a_id) return -1;
   return 0;
+}
+
+
+let cardNum = 0;
+function nextCard() {
+  if (!set) return;
+  if(!set.cards) return;
+  cardNum++;
+  if (cardNum >= studyCards.length) cardNum = 0;
+  moveCards(cardNum);
+}
+
+function moveCards(cardNum) {
+  const studyProgress = document.querySelector(".study-progress");
+  studyProgress.innerHTML = `${cardNum + 1}/${studyCards.length} | Quiz`;
+  studyCards.forEach((card) => {
+    const cardElement = document.getElementById(`card: ${card.props.id}`);
+    cardWidth = cardElement.getBoundingClientRect().width;
+
+    cardElement.style.transform = `translateX(-${
+      (cardNum * cardWidth) / 0.8
+    }px)`;
+  });
 }
