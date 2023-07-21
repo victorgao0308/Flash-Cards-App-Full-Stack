@@ -95,3 +95,14 @@ function moveCards(cardNum) {
     }px)`;
   });
 }
+
+window.addEventListener("resize", () => {
+  studyCards.forEach((card) => {
+    const cardElement = document.getElementById(`card: ${card.props.id}`);
+    cardWidth = cardElement.getBoundingClientRect().width;
+
+    cardElement.style.transform = `translateX(-${
+      (cardNum * cardWidth) / 0.8
+    }px)`;
+  });
+});

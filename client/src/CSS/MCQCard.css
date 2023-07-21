@@ -38,6 +38,16 @@
     float: left;
   }
 
+  .result-text {
+    position: absolute;
+    width: 80%;
+    height: 10%;
+    /* border: 2px solid black; */
+    left: 10%;
+    bottom: 30%;
+    text-align: center;
+  }
+
   .submit-mcq-btn {
     position: absolute;
     left: 50%;

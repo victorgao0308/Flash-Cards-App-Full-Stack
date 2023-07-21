@@ -8,12 +8,33 @@ const MCQCard = (prop) => {
 
   function checkMCQ() {
     let options = document.getElementsByName(`mcq-options-${prop.id}`);
-    options.forEach(option => {
-        if (option.checked) {
-            console.log(option.id);
-
+    let flag = false;
+    const result = document.getElementById(`mqc-result-${prop.id}`);
+    options.forEach((option) => {
+      if (option.checked) {
+        flag = true;
+        let choice = document.getElementById(`${option.id}-label`);
+        if (choice.textContent === prop.back) {
+          result.innerHTML = "Correct!";
+          setTimeout(() => {
+            result.innerHTML = "";
+          }, 1500);
+        } else {
+          result.innerHTML = "Try Again!";
+          option.disabled = true;
+          option.checked = false;
+          setTimeout(() => {
+            result.innerHTML = "";
+          }, 1500);
         }
-    })
+      }
+    });
+    if (!flag) {
+      result.innerHTML = "Please select an option!";
+      setTimeout(() => {
+        result.innerHTML = "";
+      }, 1500);
+    }
   }
   return (
     <div
@@ -63,6 +84,8 @@ const MCQCard = (prop) => {
           <p id={`mcq-${prop.id}-choice4-label`}>{option4}</p>
         </div>
       </ul>
+
+      <div className="result-text" id={`mqc-result-${prop.id}`}></div>
       <button className="submit-mcq-btn" onClick={checkMCQ}>
         Submit
       </button>
