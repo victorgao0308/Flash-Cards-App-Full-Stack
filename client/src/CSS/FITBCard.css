@@ -1,0 +1,42 @@
+.fitb-card {
+    position: absolute;
+    top: 10%;
+    left: 0%;
+    /* transform: translate(-50%, -50%); */
+    width: 80%;
+    height: 80%;
+    transition: transform 1s ease;
+    border: 2px solid black;
+    border-radius: 3px;
+  }
+  .fitb-card h3 {
+    margin: 0;
+    text-align: center;
+  }
+
+  .fitb-input {
+    position: relative;
+    width: 80%;
+    max-height: 50%;
+    left: 10%;
+    top: 10%;
+    resize: none;
+    outline: none;
+  }
+
+  .submit-fitb-btn {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 15%;
+  }
+
+  .result-text-fitb {
+    position: absolute;
+    width: 80%;
+    height: 10%;
+    /* border: 2px solid black; */
+    left: 10%;
+    bottom: 30%;
+    text-align: center;
+  }

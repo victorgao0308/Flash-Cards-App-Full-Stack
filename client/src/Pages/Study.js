@@ -2,6 +2,7 @@ import React from "react";
 import "../CSS/Study.css";
 import StudyCard from "../Components/StudyCard";
 import MCQCard from "../Components/MCQCard";
+import FITBCard from "../Components/FITBCard";
 
 let studyingSet;
 let studyProgress;
@@ -59,7 +60,7 @@ function loadStudyCards() {
 
   cards.forEach((card, index) => {
     studyCards.push(
-      <MCQCard key={index} id={index} front={card.front} back={card.back} />
+      <FITBCard key={index} id={index} front={card.front} back={card.back} />
     );
   });
 }

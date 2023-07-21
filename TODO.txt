@@ -1,8 +1,6 @@
 TODO:
 
 
-update user's sets owned column in database
-ability to study cards
-Explore sets feature
+ability to study cards -> pull it all together
+    allow for typos for fitb cards?
 stats/insights Pages
-randomize card order when reviewing

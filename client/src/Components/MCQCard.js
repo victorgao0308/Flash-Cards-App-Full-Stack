@@ -16,9 +16,9 @@ const MCQCard = (prop) => {
         let choice = document.getElementById(`${option.id}-label`);
         if (choice.textContent === prop.back) {
           result.innerHTML = "Correct!";
-          setTimeout(() => {
-            result.innerHTML = "";
-          }, 1500);
+          options.forEach(option => {
+            option.disabled = true;
+          })
         } else {
           result.innerHTML = "Try Again!";
           option.disabled = true;
