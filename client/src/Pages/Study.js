@@ -15,6 +15,7 @@ let cardElements = [];
 const Study = () => {
   localStorage.setItem("sets loaded", JSON.stringify("false"));
   localStorage.setItem("cards loaded", JSON.stringify("false"));
+  localStorage.removeItem("study stats");
 
   getStudySet();
   loadStudyCards();
@@ -25,12 +26,13 @@ const Study = () => {
       <div className="study-container">
         {noSetToLoad}
         <h2 className="study-progress">{studyProgress}</h2>
-        <div className="study-card-container">{studyCards}
-        
-        <div className="study-end hide">
-          <h4 className="study-accuracy">Total Accuracy: </h4>
-          <h4 className="study-time">Session Time: </h4>
-        </div>
+        <div className="study-card-container">
+          {studyCards}
+
+          <div className="study-end hide">
+            <h4 className="study-accuracy">Total Accuracy: </h4>
+            <h4 className="study-time">Session Time: </h4>
+          </div>
         </div>
         <div className="study-btns-container">
           <button onClick={prevCard} className="prev-study-card hide">
@@ -173,10 +175,18 @@ function moveCards(cardNum) {
       studyEnd.classList.remove("hide");
     }, 1500);
 
-    const studyAccuracy = document.querySelector(".study-accuraccy");
-    let studyStats = localStorage.getItem("study stats") ? new Map(JSON.parse(localStorage.getItem("study stats"))) : new Map();
+    const studyAccuracy = document.querySelector(".study-accuracy");
+    let studyStats = localStorage.getItem("study stats")
+      ? new Map(JSON.parse(localStorage.getItem("study stats")))
+      : new Map();
 
-    
+    let attempts = 0;
+    let correct = 0;
+    studyStats.forEach((element) => {
+      correct += element[0] + element[2];
+      attempts += element[1] + element[3];
+    });
+    studyAccuracy.innerHTML = "Session accuracy: " + Math.round((correct/attempts * 100) * 100)/100 + "%";
   }
 
   studyCards.forEach((card) => {
@@ -244,7 +254,6 @@ function chooseQuizCard(card) {
 window.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     cardNum = cardElements.length;
-    console.log(cardNum);
     moveCards(cardNum);
   }
 });
