@@ -6,26 +6,51 @@ let option1, option2, option3, option4;
 const MCQCard = (prop) => {
   getOptions(prop.back);
 
+  let attempts = 0;
+
   function checkMCQ() {
     let options = document.getElementsByName(`mcq-options-${prop.id}`);
     let flag = false;
     const result = document.getElementById(`mqc-result-${prop.id}`);
+
+
+    const prevBtn = document.querySelector(".prev-study-card");
     options.forEach((option) => {
       if (option.checked) {
+        attempts++;
         flag = true;
         let choice = document.getElementById(`${option.id}-label`);
         if (choice.textContent === prop.back) {
           result.innerHTML = "Correct!";
-          options.forEach(option => {
+          options.forEach((option) => {
             option.disabled = true;
-          })
+          });
+
+          const nextBtn = document.querySelector(".next-study-card");
+          nextBtn.classList.remove("hide");
+          prevBtn.classList.add("hide");
+
+        let studyStats = localStorage.getItem("study stats") ? new Map(JSON.parse(localStorage.getItem("study stats"))) : new Map();
+
+        // [mcqCorrect, mcqAttempted, fitbCorrect, fitbAttempted]
+        if (!studyStats.has(prop.card_id)) studyStats.set(prop.card_id, [1, attempts, 0, 0]);
+        else {
+          let stats = studyStats.get(prop.card_id);
+          stats[0] += 1;
+          stats[1] += attempts;
+          studyStats.set(prop.card_id, stats);
+        }
+        console.log(studyStats);
+        localStorage.setItem("study stats", JSON.stringify(Array.from(studyStats.entries())));
         } else {
-          result.innerHTML = "Try Again!";
+          result.innerHTML = "Try Again! Go back and review if needed.";
+          prevBtn.classList.remove("hide");
+
           option.disabled = true;
           option.checked = false;
           setTimeout(() => {
             result.innerHTML = "";
-          }, 1500);
+          }, 2500);
         }
       }
     });

@@ -28,7 +28,7 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%);
-    bottom: 15%;
+    bottom: 5%;
   }
 
   .result-text-fitb {
@@ -37,6 +37,6 @@
     height: 10%;
     /* border: 2px solid black; */
     left: 10%;
-    bottom: 30%;
+    bottom: 20%;
     text-align: center;
   }

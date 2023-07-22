@@ -37,7 +37,18 @@
   .study-descriptor, .study-progress {
     margin: 0;
   }
+
+  .study-end {
+    position: absolute;
+    width: 100%;
+    height: 80%;
+    top: 0;
+    border: 2px solid black;
+  }
   
+  .study-end h4 {
+    margin: 0;
+  }
   .hide {
     display: none;
   }

@@ -2,17 +2,28 @@ import React from "react";
 import "../CSS/FITBCard.css";
 
 const FITBCard = (prop) => {
+
+  let attempts = 0;
+
   function checkFITB() {
+    attempts++;
     const result = document.getElementById(`fitb-result-${prop.id}`);
     const input = document.getElementById(`fitb-input-${prop.id}`);
+    const prevBtn = document.querySelector(".prev-study-card");
+    
     if (input.value.toLowerCase() === prop.back.toLowerCase()) {
       result.innerHTML = "Correct!";
       input.disabled = true;
+      const nextBtn = document.querySelector(".next-study-card");
+      nextBtn.classList.remove("hide");
+      prevBtn.classList.add("hide");
     } else {
-      result.innerHTML = "Try Again!";
+      result.innerHTML = "Try Again! Go back and review if needed.";
+      prevBtn.classList.remove("hide");
+
       setTimeout(() => {
         result.innerHTML = "";
-      }, 1500)
+      }, 2500)
     }
   }
   return (
@@ -25,7 +36,7 @@ const FITBCard = (prop) => {
       <textarea
         className="fitb-input"
         id={`fitb-input-${prop.id}`}
-        placeholder="Enter answer here"
+        placeholder="Enter answer here (answer is not case sensitive)"
       ></textarea>
       <button className="submit-fitb-btn" onClick={checkFITB}>
         Submit

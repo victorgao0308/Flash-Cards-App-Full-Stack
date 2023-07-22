@@ -2,11 +2,10 @@
     position: absolute;
     top: 10%;
     left: 0%;
-    /* transform: translate(-50%, -50%); */
     width: 80%;
     height: 80%;
     transition: transform 1s ease;
-    border: 2px solid black;
+    outline: 2px solid black;
     border-radius: 3px;
   }
   
@@ -44,7 +43,7 @@
     height: 10%;
     /* border: 2px solid black; */
     left: 10%;
-    bottom: 30%;
+    bottom: 20%;
     text-align: center;
   }
 
@@ -52,5 +51,5 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%);
-    bottom: 10%;
+    bottom: 5%;
   }

@@ -6,6 +6,7 @@
     width: 80%;
     height: 80%;
     transition: transform 1s ease;
+    /* border: 2px solid black; */
   }
   
   .review-card-front,
@@ -20,7 +21,7 @@
     width: 100%;
     height: 100%;
     text-align: center;
-    word-break: break-all;
+    word-break: normal;
     overflow: hidden;
   }
   
