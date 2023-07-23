@@ -11,6 +11,9 @@ let studyCards = [];
 let set;
 let cardWidth;
 let cardElements = [];
+let startTime;
+let endTime;
+let maxCard = 0;
 
 const Study = () => {
   localStorage.setItem("sets loaded", JSON.stringify("false"));
@@ -19,6 +22,7 @@ const Study = () => {
 
   getStudySet();
   loadStudyCards();
+  startSession();
   return (
     <>
       <h1 className="study-header">Study a Set</h1>
@@ -40,6 +44,9 @@ const Study = () => {
           </button>
           <button onClick={nextCard} className="next-study-card">
             Next
+          </button>
+          <button onClick={endStudySession} className="study-done-btn hide">
+            Done
           </button>
         </div>
       </div>
@@ -83,7 +90,10 @@ function loadStudyCards() {
     let min = index + 1;
     let max = cardElements.length - 1;
     let randInt = Math.floor(Math.random() * (max - min + 1)) + min;
-    cardElements.splice(randInt, 0, new MCQ_Card(card));
+
+    let type = chooseQuizCard(card);
+    if (type) cardElements.splice(randInt, 0, new MCQ_Card(card));
+    else cardElements.splice(randInt, 0, new FITB_Card(card));
   });
 
   cards.forEach((card) => {
@@ -96,7 +106,9 @@ function loadStudyCards() {
     let min = index + 1;
     let max = cardElements.length - 1;
     let randInt = Math.floor(Math.random() * (max - min + 1)) + min;
-    cardElements.splice(randInt, 0, new MCQ_Card(card));
+    let type = chooseQuizCard(card);
+    if (type) cardElements.splice(randInt, 0, new MCQ_Card(card));
+    else cardElements.splice(randInt, 0, new FITB_Card(card));
   });
 
   cardElements.forEach((card, index) => {
@@ -147,33 +159,41 @@ function prevCard() {
   if (!set) return;
   if (!set.cards) return;
   cardNum--;
-  if (cardNum < 0) return;
+  if (cardNum < 0) {
+    cardNum = 0;
+    return;
+  }
   moveCards(cardNum);
 }
 
 function moveCards(cardNum) {
+  maxCard = Math.max(maxCard, cardNum);
   let cardElement = document.getElementById(`card: 0`);
   cardWidth = cardElement.getBoundingClientRect().width;
   const studyProgress = document.querySelector(".study-progress");
   const nextBtn = document.querySelector(".next-study-card");
-
   let currentElement = document.getElementById(`card: ${cardNum}`);
 
   if (currentElement) {
+    nextBtn.classList.add("hide");
+    if (cardNum <= maxCard) {
+      nextBtn.classList.remove("hide");
+    }
     if (currentElement.classList.contains("review-card")) {
       studyProgress.innerHTML = `${cardNum + 1}/${studyCards.length} | Learn`;
-      nextBtn.classList.remove("hide");
     } else {
       studyProgress.innerHTML = `${cardNum + 1}/${studyCards.length} | Quiz`;
-      nextBtn.classList.add("hide");
+      if (cardNum >= maxCard) nextBtn.classList.add("hide");
+
     }
   } else {
+    // study session complete
     studyProgress.innerHTML = `Study Session Complete!`;
     nextBtn.classList.add("hide");
     const studyEnd = document.querySelector(".study-end");
     setTimeout(() => {
       studyEnd.classList.remove("hide");
-    }, 1500);
+    }, 1000);
 
     const studyAccuracy = document.querySelector(".study-accuracy");
     let studyStats = localStorage.getItem("study stats")
@@ -186,7 +206,28 @@ function moveCards(cardNum) {
       correct += element[0] + element[2];
       attempts += element[1] + element[3];
     });
-    studyAccuracy.innerHTML = "Session accuracy: " + Math.round((correct/attempts * 100) * 100)/100 + "%";
+    studyAccuracy.innerHTML =
+      "Session accuracy: " +
+      Math.round((correct / attempts) * 100 * 100) / 100 +
+      "%";
+    const doneBtn = document.querySelector(".study-done-btn");
+    doneBtn.classList.remove("hide");
+    endTime = Date.now();
+    let totalTime = (endTime - startTime) / 1000;
+
+    const studyTime = document.querySelector(".study-time");
+    if (totalTime < 60) studyTime.innerHTML = `Session time: ${totalTime}s`;
+    else if (totalTime < 3600) {
+      let mins = Math.floor(totalTime / 60);
+      let secs = Math.round((totalTime % 60) * 100) / 100;
+      studyTime.innerHTML = `Session time: ${mins}m ${secs}s`;
+    } else {
+      let hours = Math.floor(totalTime / 3600);
+      totalTime -= hours * 3600;
+      let mins = Math.floor(totalTime / 60);
+      let secs = Math.round((totalTime % 60) * 100) / 100;
+      studyTime.innerHTML = `Session time: ${hours}h ${mins}m ${secs}s`;
+    }
   }
 
   studyCards.forEach((card) => {
@@ -239,12 +280,12 @@ class FITB_Card {
 // chooses a MCQ or FITB card based on % correct
 // returns true for MCQ, false for FITB
 function chooseQuizCard(card) {
-  if (card.total_percentage <= 0.3 && card.total_attempted <= 10) return true;
-  const range = Math.ceil(
-    Math.min(card.total_attempted, 25) * card.total_percentage
-  );
-  const threshold =
-    Math.floor(Math.random() * range) + card.FITB_percentage * 10;
+  const range = Math.ceil(Math.random(Math.min(card.total_attempted + 2, 25)) * (card.total_percentage + 20));
+
+
+  let threshold = Math.floor(Math.random() * range) + card.FITB_percentage * 10;
+  if (card.total_percentage <= 0.3 && card.total_attempted <= 10) threshold -= 5;
+  if (threshold < 0) return true;
   if (threshold >= range) return false;
   const rand = Math.floor(Math.random() * range);
   if (rand <= threshold) return false;
@@ -257,3 +298,12 @@ window.addEventListener("keydown", (e) => {
     moveCards(cardNum);
   }
 });
+
+// update local storage and db
+function endStudySession() {
+  window.location.href = "./sets";
+}
+
+function startSession() {
+  startTime = Date.now();
+}

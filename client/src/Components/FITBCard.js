@@ -17,6 +17,21 @@ const FITBCard = (prop) => {
       const nextBtn = document.querySelector(".next-study-card");
       nextBtn.classList.remove("hide");
       prevBtn.classList.add("hide");
+
+
+      let studyStats = localStorage.getItem("study stats") ? new Map(JSON.parse(localStorage.getItem("study stats"))) : new Map();
+
+      // [mcqCorrect, mcqAttempted, fitbCorrect, fitbAttempted]
+      if (!studyStats.has(prop.card_id)) studyStats.set(prop.card_id, [0, 0, 1, attempts]);
+      else {
+        let stats = studyStats.get(prop.card_id);
+        stats[2] += 1;
+        stats[3] += attempts;
+        studyStats.set(prop.card_id, stats);
+      }
+      localStorage.setItem("study stats", JSON.stringify(Array.from(studyStats.entries())));
+      const submitBtn = document.querySelector(".submit-fitb-btn");
+      submitBtn.classList.add("hide");
     } else {
       result.innerHTML = "Try Again! Go back and review if needed.";
       prevBtn.classList.remove("hide");

@@ -23,7 +23,7 @@
     left: 50%;
     transform: translate(-50%);
     border-radius: 3px;
-    /* overflow: hidden; */
+    overflow: hidden;
   }
 
   .study-btns-container {
@@ -40,7 +40,8 @@
 
   .study-end {
     position: absolute;
-    width: 100%;
+    width: 90%;
+    left: 5%;
     height: 80%;
     top: 0;
     border: 2px solid black;

@@ -40,8 +40,9 @@ const MCQCard = (prop) => {
           stats[1] += attempts;
           studyStats.set(prop.card_id, stats);
         }
-        console.log(studyStats);
         localStorage.setItem("study stats", JSON.stringify(Array.from(studyStats.entries())));
+        const submitBtn = document.querySelector(".submit-mcq-btn");
+        submitBtn.classList.add("hide");
         } else {
           result.innerHTML = "Try Again! Go back and review if needed.";
           prevBtn.classList.remove("hide");
