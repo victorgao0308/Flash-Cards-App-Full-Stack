@@ -3,6 +3,7 @@ import "../CSS/Study.css";
 import StudyCard from "../Components/StudyCard";
 import MCQCard from "../Components/MCQCard";
 import FITBCard from "../Components/FITBCard";
+import axios from "axios";
 
 let studyingSet;
 let studyProgress;
@@ -184,7 +185,6 @@ function moveCards(cardNum) {
     } else {
       studyProgress.innerHTML = `${cardNum + 1}/${studyCards.length} | Quiz`;
       if (cardNum >= maxCard) nextBtn.classList.add("hide");
-
     }
   } else {
     // study session complete
@@ -239,7 +239,7 @@ function moveCards(cardNum) {
 }
 
 window.addEventListener("resize", () => {
-  moveCards(cardNum);
+  if (studyCards.length > 0) moveCards(cardNum);
 });
 
 // shuffle an array
@@ -280,14 +280,21 @@ class FITB_Card {
 // chooses a MCQ or FITB card based on % correct
 // returns true for MCQ, false for FITB
 function chooseQuizCard(card) {
-  const range = Math.ceil(Math.random(Math.min(card.total_attempted + 2, 25)) * (card.total_percentage + 20));
+  const range = Math.ceil(
+    Math.random(Math.min(card.total_attempted + 2, 25)) *
+      (card.total_percentage + 20)
+  );
 
+  let percentage = card.fitb_percentage !== null ? parseInt(card.fitb_percentage) : 0;
 
-  let threshold = Math.floor(Math.random() * range) + card.FITB_percentage * 10;
-  if (card.total_percentage <= 0.3 && card.total_attempted <= 10) threshold -= 5;
+  let threshold = Math.floor(Math.random() * range) + percentage/35;
+  if (card.total_percentage <= 0.3 && card.total_attempted <= 10)
+    threshold -= 5;
+
   if (threshold < 0) return true;
   if (threshold >= range) return false;
   const rand = Math.floor(Math.random() * range);
+
   if (rand <= threshold) return false;
   return true;
 }
@@ -301,7 +308,68 @@ window.addEventListener("keydown", (e) => {
 
 // update local storage and db
 function endStudySession() {
+  if (!set) return;
+  let cards = set.cards;
+  if (!cards) return;
+  let studyStats = localStorage.getItem("study stats")
+    ? new Map(JSON.parse(localStorage.getItem("study stats")))
+    : new Map();
+  for (let [key, value] of studyStats) {
+    let card;
+    cards.forEach((c) => {
+      if (parseInt(key) === c.card_id) {
+        card = c;
+      }
+    });
+    card.mcq_correct = parseInt(card.mcq_correct) +  value[0];
+    card.mcq_attempted = parseInt(card.mcq_attempted) +  value[1];
+    card.mcq_percentage = Math.round(
+      (card.mcq_correct / card.mcq_attempted) * 100)
+    ;
+    card.fitb_correct = parseInt(card.fitb_correct) + value[2];
+    card.fitb_attempted = parseInt(card.fitb_attempted) + value[3];
+    card.fitb_percentage =  Math.round(
+      (card.fitb_correct / card.fitb_attempted) * 100)
+    ;
+    card.total_correct = card.mcq_correct + card.fitb_correct;
+    card.total_attempted = card.mcq_attempted + card.fitb_attempted;
+    card.total_percentage = Math.round(
+      (card.total_correct / card.total_attempted) * 100)
+    ;
+  }
+  set.cards = cards;
+  localStorage.setItem(`set: ${set.set_id}`, JSON.stringify(set));
   window.location.href = "./sets";
+
+  let user = localStorage.getItem("signed in as")
+  ? JSON.parse(localStorage.getItem("signed in as"))
+  : null;
+
+  if (user) updateDB(cards);
+}
+
+async function updateDB(cards) {
+  if (!cards) return;
+  cards.forEach(card => {
+    updateCard(card);
+
+  })
+}
+
+async function updateCard(card) {
+  await axios.put(`http://localhost:8000/cards/update/${card.card_id}`, {
+    mcq_attempted : `${card.mcq_attempted}`,
+    mcq_correct : `${card.mcq_correct}`,
+    mcq_percentage : `${card.mcq_percentage}`,
+    fitb_attempted : `${card.fitb_attempted}`,
+    fitb_correct: `${card.fitb_correct}`,
+    fitb_percentage : `${card.fitb_percentage}`,
+    total_attempted : `${card.total_attempted}`,
+    total_correct: `${card.total_correct}`,
+    total_percentage: `${card.total_percentage}`
+  }).then(res => {
+    // console.log(res.data);
+  })
 }
 
 function startSession() {

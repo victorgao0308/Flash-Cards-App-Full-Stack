@@ -41,7 +41,7 @@ const MCQCard = (prop) => {
           studyStats.set(prop.card_id, stats);
         }
         localStorage.setItem("study stats", JSON.stringify(Array.from(studyStats.entries())));
-        const submitBtn = document.querySelector(".submit-mcq-btn");
+        const submitBtn = document.getElementById(`submit-mcq-btn-${prop.id}`);
         submitBtn.classList.add("hide");
         } else {
           result.innerHTML = "Try Again! Go back and review if needed.";
@@ -112,7 +112,7 @@ const MCQCard = (prop) => {
       </ul>
 
       <div className="result-text" id={`mqc-result-${prop.id}`}></div>
-      <button className="submit-mcq-btn" onClick={checkMCQ}>
+      <button className="submit-mcq-btn" id = {`submit-mcq-btn-${prop.id}`} onClick={checkMCQ}>
         Submit
       </button>
     </div>

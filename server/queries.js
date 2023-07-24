@@ -205,6 +205,17 @@ const deleteCard = (request, response) => {
   });
 }
 
+const updateCardStats = (request, response) => {
+  const cardId = request.params.id;
+  const {mcq_attempted, mcq_correct, mcq_percentage, fitb_attempted, fitb_correct, fitb_percentage, total_attempted, total_correct, total_percentage} = request.body;
+  pool.query("UPDATE cards SET mcq_attempted = $1, mcq_correct = $2, mcq_percentage = $3, fitb_attempted = $4, fitb_correct = $5, fitb_percentage = $6, total_attempted = $7, total_correct = $8, total_percentage = $9 WHERE card_id = $10", [mcq_attempted, mcq_correct, mcq_percentage, fitb_attempted, fitb_correct, fitb_percentage, total_attempted, total_correct, total_percentage, cardId],
+  (error, results) => {
+    if (error) {
+      response.status(200).send(`${error}`)
+    } else response.status(200).send(`Update card with ID: ${cardId}`);
+  })
+}
+
 
 module.exports = {
   getUsers,
@@ -223,5 +234,6 @@ module.exports = {
   editCard,
   deleteCard,
   editSetName,
-  deleteSet
+  deleteSet,
+  updateCardStats
 };

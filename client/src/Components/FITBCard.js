@@ -30,7 +30,7 @@ const FITBCard = (prop) => {
         studyStats.set(prop.card_id, stats);
       }
       localStorage.setItem("study stats", JSON.stringify(Array.from(studyStats.entries())));
-      const submitBtn = document.querySelector(".submit-fitb-btn");
+      const submitBtn = document.getElementById(`submit-fitb-btn-${prop.id}`);
       submitBtn.classList.add("hide");
     } else {
       result.innerHTML = "Try Again! Go back and review if needed.";
@@ -53,7 +53,7 @@ const FITBCard = (prop) => {
         id={`fitb-input-${prop.id}`}
         placeholder="Enter answer here (answer is not case sensitive)"
       ></textarea>
-      <button className="submit-fitb-btn" onClick={checkFITB}>
+      <button className="submit-fitb-btn"  id = {`submit-fitb-btn-${prop.id}`} onClick={checkFITB}>
         Submit
       </button>
       <div className="result-text-fitb" id={`fitb-result-${prop.id}`}></div>

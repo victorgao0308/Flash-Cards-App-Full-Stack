@@ -297,7 +297,7 @@ const ViewSet = () => {
           onClick={toggleDeleteSetMenu}
         />
         <h2 className="delete-set-header">Delete Set</h2>
-        <h4 className="delete-set-descriptor">Delete Set ""?</h4>
+        <h4 className="delete-set-descriptor">Delete set ""?</h4>
 
         <div className="delete-set-menu-btns-container">
           <button className="delete-set-no" onClick={toggleDeleteSetMenu}>
@@ -403,7 +403,7 @@ function toggleDeleteSetMenu() {
   const deleteSetMenu = document.querySelector(".delete-set-menu");
   deleteSetMenu.classList.toggle("hide");
   const deleteSetDescriptor = document.querySelector(".delete-set-descriptor");
-  deleteSetDescriptor.innerHTML = `Delete Set "${set.set_name}?" All of this set's associated cards will also be deleted.`;
+  deleteSetDescriptor.innerHTML = `Delete set "${set.set_name}?" All of this set's associated cards will also be deleted.`;
 }
 
 function editSet() {

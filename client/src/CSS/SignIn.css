@@ -14,14 +14,21 @@
 }
 
 .sign-in-input-container {
-    position: absolute;
+    position: relative;
     width: 50%;
     left: 50%;
     top: 15%;
     transform: translate(-50%);
 }
 
-.sign-in-input-container h4 {
+
+.input-container {
+    position: relative;
+    height: 50px;
+}
+
+.input-container h4 {
+    position: relative;
     margin: 0;
 }
 
@@ -40,7 +47,9 @@
 }
 
 .username-input, .password-input {
-    max-width: 100%;
+    position: absolute;
+    bottom: 0;
+    width: 90%;
     outline: none;
 }
 
@@ -55,5 +64,10 @@
 
 .sign-in-error-message {
     text-align: center;
+    position: relative;
+    width: 100%;
+    top: 50%;
     color: red;
 }
+
+

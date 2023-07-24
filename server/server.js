@@ -44,7 +44,8 @@ app.get("/sets/cards/:id", db.getCardsFromSet);
 app.put("/sets/insertcards/:id", db.addCardsToSet);
 app.get("/cards/:id", db.getCardById);
 app.put("/cards/edit/:id", db.editCard);
-app.delete("/cards/delete/:id", db.deleteCard)
+app.delete("/cards/delete/:id", db.deleteCard);
+app.put("/cards/update/:id", db.updateCardStats)
 
 app.listen(8000, () => {
   console.log(`Server is running on port 8000.`);
