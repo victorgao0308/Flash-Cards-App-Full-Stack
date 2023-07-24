@@ -21,6 +21,8 @@ const Study = () => {
   localStorage.setItem("cards loaded", JSON.stringify("false"));
   localStorage.removeItem("study stats");
 
+  studyCards = [];
+  cardElements = [];
   getStudySet();
   loadStudyCards();
   startSession();
