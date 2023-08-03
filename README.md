@@ -13,4 +13,5 @@ To run the program, download the `client` and the `server` file into a new folde
 open two terminals; `cd` into `client` on one, and into `server` on the other. Then, on the client terminal type `npm start`, and in the server terminal type `npm start dev`.
 
 NOTE: The current database setup is with a local one, so if you want database integration, you will need to create your own local psql database. 
+The app will still work without a database; information will be stored in the local storage of the browser.
 
