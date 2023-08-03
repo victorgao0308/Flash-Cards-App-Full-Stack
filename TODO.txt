@@ -1,6 +1,0 @@
-TODO:
-
-
-allow for typos for fitb cards?
-stats/insights Pages ?
-css rehaul?
