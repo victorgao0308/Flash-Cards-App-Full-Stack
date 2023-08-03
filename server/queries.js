@@ -1,5 +1,7 @@
 const Pool = require("pg").Pool;
 
+
+// CHANGE PSQL INFO HERE
 const pool = new Pool({
   user: "me",
   host: "localhost",
