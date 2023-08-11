@@ -15,3 +15,35 @@ open two terminals; `cd` into `client` on one, and into `server` on the other. T
 NOTE: The current database setup is with a local one, so if you want database integration, you will need to create your own local psql database. 
 The app will still work without a database; information will be stored in the local storage of the browser.
 
+If you wish to host a local databse, the commands to create the database and tables are below:\
+`CREATE DATABASE flashcards;`
+
+`\c flashcards`
+
+`CREATE TABLE accounts (user_id INT PRIMARY KEY,
+    username VARCHAR UNIQUE NOT NULL,
+    password VARCHAR NOT NULL,
+    email VARCHAR UNIQUE NOT NULL,
+    sets_owned big_int[],)`
+
+`CREATE TABLE cards (card_id INT PRIMARY KEY,
+    front VARCHAR,
+    back VARCHAR,
+    mcq_attempted VARCHAR,
+    mcq_correct VARCHAR,
+    mcq_percentage VARCHAR,
+    fitb_attempted VARCHAR,
+    fitb_correct VARCHAR,
+    fitb_percentage VARCHAR,
+    total_attempted VARCHAR,
+    total_correct VARCHAR,
+    total_percentage VARCHAR,)`
+
+`CREATE TABLE sets (set_id INT PRIMARY KEY,
+    set_name VARCHAR,
+    total_time_studied VARCHAR,
+    total_accuracy VARCHAR,
+    owner VARCHAR,
+    cards bigint[],)`
+
+    
