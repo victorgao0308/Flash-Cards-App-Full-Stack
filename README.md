@@ -17,8 +17,8 @@ The app will still work without a database; information will be instead stored i
 
 ### If you wish to host a local database, the commands to create the database and tables are below:
 
-The default user of the PostgreSQL is "me", the default password is "password", and the default port is 5432.\
-If you wish to change these credentials, navigate to server/queries.js and update the following code chunk:
+NOTE: The default user of the PostgreSQL is `me`, the default password is `password`, and the default port is `5432`.\
+If you wish to change these credentials, navigate to `server/queries.js` and update the following code chunk:
 ```
 const pool = new Pool({
   user: "me",
@@ -28,6 +28,7 @@ const pool = new Pool({
   port: 5432,
 });
 ```
+Once the credentials match, enter these commands to properly set up the database and tables:
 ```
 CREATE DATABASE flashcards;
 ```
@@ -35,14 +36,17 @@ CREATE DATABASE flashcards;
 \c flashcards
 ```
 ```
-CREATE TABLE accounts (user_id INT PRIMARY KEY,
+CREATE TABLE accounts (
+    user_id INT PRIMARY KEY,
     username VARCHAR UNIQUE NOT NULL,
     password VARCHAR NOT NULL,
     email VARCHAR UNIQUE NOT NULL,
-    sets_owned big_int[],)
+    sets_owned big_int[]
+);
 ```
 ```
-CREATE TABLE cards (card_id INT PRIMARY KEY,
+CREATE TABLE cards (
+    card_id INT PRIMARY KEY,
     front VARCHAR,
     back VARCHAR,
     mcq_attempted VARCHAR,
@@ -53,15 +57,18 @@ CREATE TABLE cards (card_id INT PRIMARY KEY,
     fitb_percentage VARCHAR,
     total_attempted VARCHAR,
     total_correct VARCHAR,
-    total_percentage VARCHAR,)
+    total_percentage VARCHAR
+);
 ```
 ```
-CREATE TABLE sets (set_id INT PRIMARY KEY,
+CREATE TABLE sets (
+    set_id INT PRIMARY KEY,
     set_name VARCHAR,
     total_time_studied VARCHAR,
     total_accuracy VARCHAR,
     owner VARCHAR,
-    cards bigint[],)
+    cards bigint[]
+);
 ```
 
 
